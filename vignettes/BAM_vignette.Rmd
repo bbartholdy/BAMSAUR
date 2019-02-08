@@ -1,0 +1,98 @@
+---
+title: "BAMSAUR"
+author: "Bjørn Peare Bartholdy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{BAMSAUR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The BAMSAUR package provides a regression-based method for nonadult age-at-death estimation using dental wear of both the deciduous and permanent dentitions. Additional functions allow the user to evaluate their own reference sample using leave-one-out cross validation (LOOCV) and diagnostic plots.
+
+This package draws on the 'earth' function from the 'earth' package, so it is recommended to read the instructions for that package: http://www.milbo.org/doc/earth-notes.pdf
+
+
+##Functions
+
+### BAMSAUR
+The main function calculates the age-at-death of an individual from a single dental wear score (between 0 and 16), using the Middenbeemster (MB11) population as a reference sample. The user can choose between linear, quadratic, and cubic regression, as well as multivariate adaptive regression splines (MARS) to calulate the age. The age range can be calculated using various levels of confidence (CI) or prediction intervals (PI). The recommended method for the MB11 reference sample is quadratic regression using 68% (PI). The user can also choose to upload a data frame with their own reference sample instead of using MB11. Additional arguments can be passed through to the 'lm' and 'earth' functions. See ?lm and/or 'earth' for more details.
+
+```
+#The following example calculates the ages-at-death with 90%PIs of 10 fictional individuals using random wear scores
+wear <- runif(10,0,16)
+BAMSAUR(wear, interval = "prediction", level = 0.90)
+
+#Age-at-death calculation using MARS
+BAMSAUR(wear, model = "mars", interval = "prediciton", level = 0.90)
+```
+
+### BAMSAUR.bff
+This function allows the user to evaluate their own reference sample, using LOOCV. The function requires a data frame containing known ages in the first column and associated dental wear scores in the second column. The default setting is 68%PI to calculate the accuracy.
+
+```
+#the following expression evaluates the sample with 68% prediction intervals as age ranges
+MBex <- BAMSAUR.bff(MBsimple)
+#the following code accesses the quadratic plot
+MBex$quad.plot
+```
+
+### runBAM
+This function opens the BAMSAUR shiny app, which is an easy to use graphical user interface with the same functional utility as the separate functions. It is intended for users who are not familiar with R.
+
+```
+##Not run: runBAM()
+```
+
+### BAMSAUR.LOOCV
+This function allows you to pass a "lm" or "earth" object through LOOCV and calculate the accuracy of the data that was used to create the model. It's main use is within the BAMSAUR.bff() function.
+
+
+##Additional information
+
+### Age interval calculation
+Age intervals are calculated with the following code, based on the formulas for the "interval for the mean value of y for a given value of x" (Altman and Garner 2000: 76-79):
+
+```
+Interval <- function(wear, wear.data, interval, level, df, s) {
+alpha <- 1 - level
+n <- length(wear.data)
+
+if(interval == "prediction"){
+  Int.s <- s * sqrt(1 + (1 / n) + (((wear - mean(wear.data))^2) / ((n - 1)*sd(wear.data)^2)))
+  Int <- qt((1-(alpha / 2)), df) * Int.s
+  return(Int)
+} else if(interval == "confidence") {
+  Int.s <- s * sqrt((1 / n) + (((wear - mean(wear.data))^2) / ((n - 1)*sd(wear.data)^2)))
+  Int <- qt((1-(alpha / 2)), df) * Int.s
+  return(Int)
+}
+
+}
+```
+
+###Further reading
+
+More information on the development of the method can be found in Bartholdy, B.P., Hoogland, M.L.P., and Waters-Rist, A., (under review). How Old Are You Now? A new ageing method for nonadults based on dental wear. _International Journal of Osteoarchaeology_.
+
+## References
+
+Altman, D.G. and Gardner, M.J. (2000). Regression and correlation.   In (eds) Altman, D. G., Machin, D., Bryant, T.N., and Gardner,     M.J. (73-92). \emph{Statistics with Confidence}(2nd ed.). BMJ      Books.
+
+R Core Team (2018). R: A language and environment for
+  statistical computing. R Foundation for Statistical
+  Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+Stephen Milborrow. Derived from mda:mars by Trevor Hastie and
+  Rob Tibshirani. Uses Alan Miller's Fortran utilities with
+  Thomas Lumley's leaps wrapper. (2019). earth: Multivariate
+  Adaptive Regression Splines. R package version 4.7.0.
+  https://CRAN.R-project.org/package=earth
