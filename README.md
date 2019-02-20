@@ -5,29 +5,44 @@ Users who are not familiar with the R-environment can also take advantage of a u
 
 # Installation
 1. To install BAMSAUR, R must first be installed (https://cran.r-project.org/).
-
-2. Open R, and install the package "devtools" by entering the following into the R-console:
+```r
+#2. Open R, and install the package "devtools" by entering the following into the R-console:
 install.packages("devtools")
 
-3. The BAMSAUR package can then be downloaded and installed:
+#3. The BAMSAUR package can then be downloaded and installed:
 devtools::install_github("bbartholdy/BAMSAUR")
 library(BAMSAUR)
-
+```
 # Usage
 
 The method was developed on Middenbeemster, a 19th century Dutch skeletal collection containing individuals with documented age-at-death. The method uses a 9-stage dental wear scoring system, applicable to the entire deciduous and permanent (excluding third molars) dentitions. The average wear scores were used to develop a quadratic regression model from which to base age-at-death predictions. Age ranges are calculated using 68% prediction intervals. Users can also elect to use linear and cubic regression, or multivariate adaptive regression splines (MARS) for age-at-death predictions. Additional functions can be used to evaluate potential reference samples by developing linear, quadratic, and cubic regression models, as well as a MARS model, and provides information on the developed models such as r-squared values, accuracies from leave-one-out cross validations (LOOCV), predictive residual error sum of squares (PRESS), and precision (based on the average size of predicted age ranges).
 
 # Functions
 
-BAMSAUR
-The main function
+`BAMSAUR()`
+The main function which can be used to predict age-at-death based on dental wear
 
 examples
+```r
+#The following example calculates the ages-at-death with 90%PIs of 10 random wear scores
+wear <- runif(10,0,16)
+BAMSAUR(wear, interval = "prediction", level = 0.90)
+
+#Age-at-death calculation using MARS
+BAMSAUR(wear, model = "mars", interval = "prediciton", level = 0.90)
+```
 
 BAMSAUR.bff
 Reference sample evaluation function
 
 examples
+
+```r
+#the following expression evaluates the sample with 68% prediction intervals as age ranges
+MBex <- BAMSAUR.bff(MBsimple)
+#the following code accesses the quadratic plot
+MBex$quad.plot
+```
 
 BAMSAUR.LOOCV
 Leave-one-out cross validation function to calculate accuracies of the regression models. The calculated age ranges are incorporated into the LOOCV, and a case is considered accurate if the known age is contained within the age range for the predicted age. This function is incorporated into the BAMSAUR.bff function.
@@ -36,3 +51,8 @@ examples
 
 runBAM
 This launches the GUI.
+
+examples:
+```r
+##Not run: runBAM()
+```
