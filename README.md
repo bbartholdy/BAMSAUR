@@ -6,7 +6,7 @@ Users who are not familiar with the R-environment can also take advantage of a u
 # Installation
 1. To install BAMSAUR, R must first be installed (https://cran.r-project.org/).
 
-2. Open R, and install the package "devtools" by entering the following into the R-console.
+2. Open R, and install the package "devtools" by entering the following into the R-console:
 install.packages("devtools")
 
 3. The BAMSAUR package can then be downloaded and installed:
@@ -20,10 +20,19 @@ The method was developed on Middenbeemster, a 19th century Dutch skeletal collec
 # Functions
 
 BAMSAUR
+The main function
+
+examples
 
 BAMSAUR.bff
+Reference sample evaluation function
+
+examples
 
 BAMSAUR.LOOCV
+Leave-one-out cross validation function to calculate accuracies of the regression models. The calculated age ranges are incorporated into the LOOCV, and a case is considered accurate if the known age is contained within the age range for the predicted age. This function is incorporated into the BAMSAUR.bff function.
+
+examples
 
 runBAM
 This launches the GUI.
