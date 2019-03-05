@@ -21,20 +21,22 @@ The method was developed on Middenbeemster, a 19th century Dutch skeletal collec
 
 BAMSAUR age-at-death estimation
 
-`BAMSAUR(wear, data = NULL, pop = "MB11", model = "quadratic", interval = "prediction", level = 0.68, ...)`
-`BAMSAUR(wear, data = NULL, pop = "MB11", model = "mars", interval = "prediction", level = 0,90, varmod.method, nfold, ncross)`
+`BAMSAUR(wear, data = NULL, pop = "MB11", rank = 2, interval = "prediction", level = 0.68, ...)`
+`BAMSAUR.mars(wear, data = NULL, pop = "MB11", level = 0.68, varmod.method = "earth", nfold = n-1, ncross = 3)`
 
-The main function which can be used to predict age-at-death based on dental wear. The Middenbeemster data is built-in, so if pop = "MB11" is chosen, the data input is not required. If pop = "other", a data frame with a column for age and a second column for wear scores can be inserted. The function returns the input wear score, the age prediction, age range as +- years, and lower and upper intervals. The default is 68%PIs, but "confidence" intervals (not supported for MARS models) and any level between 0 and 1 (0 - 100%), not inclusive, can be chosen. The function also supports "linear", "cubic", and "mars" models.
+The main function which can be used to predict age-at-death based on dental wear. The Middenbeemster data is built-in, so if pop = "MB11" is chosen, the data input is not required. If pop = "other", a data frame with a column for age and a second column for wear scores can be inserted. The function returns the input wear score, the age prediction, age range as +- years, and lower and upper intervals. The default method is a quadratic (rank = 2) model with 68%PIs, but "confidence" intervals and any level between 0 and 1 (0 - 100%), not inclusive, can be chosen. The BAMSAUR.mars function can be used to apply a MARS model for the age-at-death estimation. Only "prediction" intervals are supported for MARS models. The default number of cross validations (ncross) is 3 to reduce computation time.
 
 Examples:
 
 ```r
-#The following example calculates the ages-at-death with 90%PIs of 10 random wear scores
+#The following example calculates the ages-at-death with 68%PIs of 10 random wear scores
 wear <- runif(10,0,16)
-BAMSAUR(wear, interval = "prediction", level = 0.90)
+BAMSAUR(wear)
+#Ages-at-death using a linear model and 95%CIs
+BAMSAUR(wear, rank = 1, interval = "confidence", level = 0.95)
 
 #Age-at-death calculation using MARS
-BAMSAUR(wear, model = "mars", interval = "prediciton", level = 0.90)
+BAMSAUR.mars(wear)
 ```
 
 BAMSAUR best-fit function
@@ -69,18 +71,20 @@ BAMSAUR shiny app
 
 `runBAM()`
 
-This launches the GUI.
+This launches the BAMSAUR shiny app, which contains the same functionality as the individual functions.
 
-<img src="man/figures/....png" align="centre" width = "120" /> 
 
 Example:
 ```r
 ##Not run: runBAM()
 ```
-references
 
+# References
+
+Milborrow, S. Derived from mda:mars by Trevor Hastie and Rob Tibshirani. Uses Alan Miller's Fortran utilities with Thomas Lumley's leaps wrapper. (2019). earth: Multivariate adaptive regression splines. R package version 4.7.0. https://CRAN.R-project.org/package=earth
 publication
 
-R
-ggplot2
-earth
+R Core Team (2018). R: A language and environment for statistical computing. R Foundation for 
+Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+Wickham, H. (2016). ggplot2: Elegant graphics for data analysis. New York: Springer-Verlag.
