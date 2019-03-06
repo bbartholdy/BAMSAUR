@@ -76,5 +76,3 @@ MBex$quad.plot
 
 \code{\link[stats]{lm}}
 }
-\keyword{age-at-death}
-\keyword{estimation}

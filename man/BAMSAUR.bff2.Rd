@@ -30,5 +30,3 @@ It also provides the mean of the estimated age ranges, as an indicator of method
 \note{
 If the slope of the regression is significantly different (2 standard deviations) from 0 or 1, a warning message will appear.
 }
-\keyword{age-at-death}
-\keyword{estimation}

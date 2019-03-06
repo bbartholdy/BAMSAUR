@@ -17,7 +17,7 @@ BAMSAUR.1 <-  eventReactive(input$calc1, {
                                 sep = input$sep1,
                                 dec = input$dec1)
                 }
-  BAMSAUR(wear = input$wear1, data = inData1, pop = input$pop1, model = input$model1, interval = input$interval1, level = input$level1/100, varmod.method = input$varmod.method1, nfold = input$nfold1, ncross = input$ncross1)})
+  BAMSAUR:::BAMSAURshiny(wear = input$wear1, data = inData1, pop = input$pop1, model = input$model1, interval = input$interval1, level = input$level1/100, varmod.method = input$varmod.method1, nfold = input$nfold1, ncross = input$ncross1)})
   output$estimate1 <- renderText({ result1 <- BAMSAUR.1()
   paste(result1$estimate, " +- ", result1$`+- years`, " years")
   })

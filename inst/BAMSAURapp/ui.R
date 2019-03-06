@@ -261,16 +261,16 @@ ui <- fluidPage(
                     numericInput("T45", "T45", min = 8, max = 16, value = NA, width = "100px"),
                     numericInput("T46", "T46", min = 8, max = 16, value = NA, width = "100px"),
                     numericInput("T47", "T47", min = 8, max = 16, value = NA, width = "100px")
-               ),
+               ))),
             tags$hr(),
             tags$h5("Calculate average score"),
             actionButton("calc41", "Calculate"),
             textOutput("out41")
-            ))),
+            ),
             tabPanel("Universal",
                      tags$br(),
                      tags$h4("Insert dental wear scores (Universal numbering system)"),
-                     tags$img(src = "Usys.png", width = 350),
+                     tags$img(src = "Usys.png"),
                       helpText("Teeth not scored must be left blank"),
                      checkboxInput("dec42", "Deciduous", value = FALSE),
                      checkboxInput("per42", "Permanent", value = FALSE),
@@ -311,7 +311,6 @@ ui <- fluidPage(
                      conditionalPanel(
                        condition = "input.per42 == true",
                        tags$h4("Permanent dentition"),
-                       tags$img(src = "Usys.png"),
                        fluidRow(
                          column(2,
                                 numericInput("T2", "2", min = 8, max = 16, value = NA, width = "100px"),
@@ -348,12 +347,12 @@ ui <- fluidPage(
                                 numericInput("T29", "29", min = 8, max = 16, value = NA, width = "100px"),
                                 numericInput("T30", "30", min = 8, max = 16, value = NA, width = "100px"),
                                 numericInput("T31", "31", min = 8, max = 16, value = NA, width = "100px")
-                         ),
-                         tags$hr(),
-                         tags$h5("Calculate average score"),
-                         actionButton("calc42", "Calculate"),
-                         textOutput("out42")
-                       )))
+                        ))),
+                     tags$hr(),
+                     tags$h5("Calculate average score"),
+                     actionButton("calc42", "Calculate"),
+                     textOutput("out42")
+                     )
 
 
             ),
