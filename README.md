@@ -17,7 +17,7 @@ library(BAMSAUR)
 
 The BAMSAUR package uses the following R-packages:
 ```r
-c(AICcmodavg, earth, ggfortify, ggplot2, shiny)
+c("AICcmodavg", "earth", "ggfortify", "ggplot2", "shiny")
 ```
 
 The method was developed on Middenbeemster, a 19th century Dutch skeletal collection containing individuals with documented age-at-death. The method uses a 9-stage dental wear scoring system, applicable to the entire deciduous and permanent (excluding third molars) dentitions. The average wear scores were used to develop a quadratic regression model from which to base age-at-death predictions. Age ranges are calculated using 68% prediction intervals (PIs). Users can also elect to use linear and cubic regression, or multivariate adaptive regression splines (MARS) for age-at-death predictions. Additional functions can be used to evaluate potential reference samples by developing linear, quadratic, and cubic regression models, as well as a MARS model (using the 'earth' package), and provides information on the developed models such as r-squared values, accuracies from leave-one-out cross validations (LOOCV), predictive residual error sum of squares (PRESS), Akaike and Bayesian information criterion (AIC and BIC), and precision (based on the average size of predicted age ranges). It also returns plots (using 'ggplot2') for each of the regression models.
