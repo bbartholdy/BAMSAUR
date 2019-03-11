@@ -29,9 +29,9 @@ BAMcv.lm <- function(object, interval = "prediction", level = 0.68){
 
   #lm objects
   #LOOCV
-  res <- rstandard(object, interval = interval, level = level)
-  est <- age.data - res
-  age.diff <- est - age.data
+  est <- predict(object)
+  res <- est - age.data
+  age.diff <- res
   int <- Interval(wear.data, wear.data, interval = interval, level = level, df = df, s = s)
   low <- est - int
   upp <- est + int
