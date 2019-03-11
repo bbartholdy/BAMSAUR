@@ -9,3 +9,5 @@ Added option to apply MARS-sized prediction intervals to the simple regression m
 Erroneous code corrected in the BAMcv.lm function, which was providing incorrect accuracy rates.
 
 Leave-one-out cross validation now performed on MARS models, allowing PRESS to be calculated.
+
+General housekeeping.
