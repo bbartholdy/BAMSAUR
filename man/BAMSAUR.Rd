@@ -5,7 +5,7 @@
 \title{Age-at-death estimation}
 \usage{
 BAMSAUR(wear, data = NULL, rank = 2, pop = "MB11",
-  interval = "prediction", level = 0.68, ...)
+  interval = "prediction", level = 0.68, mars.int = T, ...)
 }
 \arguments{
 \item{wear}{Numeric. The wear score of an individual. Can be a single value or a vector containing a list of wear scores from multiple individuals.}
@@ -19,6 +19,8 @@ BAMSAUR(wear, data = NULL, rank = 2, pop = "MB11",
 \item{interval}{Character. The type of age interval used. Can be either "prediction" or "confidence" intervals. The default is set at "prediction".}
 
 \item{level}{Numeric. Determines the level of confidence or prediction intervals. Is a number between 0 and 1 (not inclusive). 0.68, 0.90, or 0.95 is recommended. The default is set at 0.68.}
+
+\item{mars.int}{Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'TRUE'.}
 
 \item{...}{Can be used to pass additional arguments to the lm function.}
 }

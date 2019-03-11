@@ -42,6 +42,7 @@ ui <- fluidPage(
                             numericInput("wear1", label = "Insert wear score", value = 0, min = 0),
                             radioButtons("model1", label = "Select model", choices = c("linear", "quadratic", "cubic", "mars"), selected = "quadratic"),
                             radioButtons("interval1", label = "Select age interval type", choices = c("prediction", "confidence")),
+                            checkboxInput("mars.int1", label = "MARS intervals", value = TRUE),
                             sliderInput("level1", label = "Select age interval level(%)", min = 1, max = 100, value = 68, step = 1),
                             conditionalPanel(
                               condition = "input.model1 == 'mars'",
@@ -122,7 +123,7 @@ ui <- fluidPage(
             actionButton("eval3", "Evaluate")
           ),
         mainPanel(
-          "Computation may take a few seconds",
+          "Computation may take up to a minute",
           tabsetPanel(
             tabPanel("Summary",
               textOutput("upload3"),
@@ -171,6 +172,14 @@ ui <- fluidPage(
            ),
            tabPanel("MARS plots",
                     plotOutput("mars3"),
+                    "MARS diagnostic plots can only be obtained in the R-console.
+                    Use the following code:",
+                    tags$br(),
+                    "eval <- BAMSAUR.bff(data)",
+                    tags$br(),
+                    "mars <- eval$mars",
+                    tags$br(),
+                    "plot(mars)",
                     plotOutput("marseval3")
            )
 

@@ -155,17 +155,17 @@ BAMSAUR.bff <- function(data, interval = "prediction", level = 0.68, varmod.meth
   }
 
 #LOOCV of the data
-CV.cub <- BAMSAUR:::BAMcv.lm(cub, interval = interval, level = level)
+CV.cub <- BAMcv.lm(cub, interval = interval, level = level)
 #CV.cub <- BAMSAUR.LOOCV(cub, interval=interval, level=level)
 
 #CV.quad <- BAMSAUR.LOOCV(quad, interval=interval, level = level)
-CV.quad <- BAMSAUR:::BAMcv.lm(quad, interval = interval, level = level)
+CV.quad <- BAMcv.lm(quad, interval = interval, level = level)
 
 #CV.lin <- BAMSAUR.LOOCV(lin, interval = interval, level = level)
-CV.lin <- BAMSAUR:::BAMcv.lm(lin, interval = interval, level = level)
+CV.lin <- BAMcv.lm(lin, interval = interval, level = level)
 
 #CV.mars <- BAMSAUR.LOOCV(MARS, data, interval = "prediction", level = level)
-CV.mars <- BAMSAUR:::BAMcv.mars(MARS, data = data, level = level)
+CV.mars <- BAMcv.mars(MARS, data = data, level = level)
 mars.PRESS <- sum(CV.mars$out$difference^2)
 #Accuracy table output
 acc.table <- as.data.frame(matrix(nrow = 4, ncol = 3), row.names = c("linear", "quadratic", "cubic", "MARS"))

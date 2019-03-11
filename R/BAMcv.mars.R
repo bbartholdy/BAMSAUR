@@ -5,6 +5,7 @@
 #' @param data Data frame containing the data used to obtain the regression model used in the 'object' field. Only necessary for 'earth' objects.
 #' @param type Character. The type of prediction. "link", "response", or "earth".
 #' @param level Numeric. Determines the level of confidence or prediction intervals. Can be any number between 0 and 1 (not inclusive), but one of 0.68, 0.90, or 0.95 is recommended.
+#' @param ... Additional arguments can be passed to the 'earth' function. See ?earth for more details.
 #' @details The main use of this function is within the BAMSAUR.bff function, but can also be used as a stand-alone function. The level of accuracy is determined by the type and level of the age intervals.
 #' Accuracy is also determined by the percentage of cases that fall within 1 and 2 years of the age estimate, which is independent of the age interval size.
 #' @return Returns a list containing the following:

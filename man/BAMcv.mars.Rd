@@ -14,6 +14,8 @@ BAMcv.mars(object, data, type = "earth", level = 0.68, ...)
 \item{type}{Character. The type of prediction. "link", "response", or "earth".}
 
 \item{level}{Numeric. Determines the level of confidence or prediction intervals. Can be any number between 0 and 1 (not inclusive), but one of 0.68, 0.90, or 0.95 is recommended.}
+
+\item{...}{Additional arguments can be passed to the 'earth' function. See ?earth for more details.}
 }
 \value{
 Returns a list containing the following:

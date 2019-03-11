@@ -10,6 +10,7 @@
 #' @param varmod.method Method used to build the variance model. See ?earth for more details.
 #' @param nfold Number of folds.
 #' @param ncross Number of cross validations.
+#' @param mars.int Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'TRUE'.
 #' @details This function uses the "lm" function for the regression models, and "earth" for the MARS models.
 #'
 #' @return a data frame containing the following values:
@@ -28,7 +29,7 @@
 #' @importFrom earth earth
 #' @keywords Age-at-death estimation
 
-BAMSAURshiny <- function(wear, data = NULL, model = "quadratic", pop = "MB11", interval = "prediction", level = 0.68, varmod.method = "earth", nfold = n-1, ncross = 3){
+BAMSAURshiny <- function(wear, data = NULL, model = "quadratic", pop = "MB11", interval = "prediction", level = 0.68, varmod.method = "earth", nfold = n-1, ncross = 3, mars.int= T){
 
   if(model == "linear"){
     rank <- 1
@@ -56,7 +57,13 @@ BAMSAURshiny <- function(wear, data = NULL, model = "quadratic", pop = "MB11", i
     colnames(wear) <- "Wear"
     colnames(data) <- c("Age", "Wear")
     model <- lm(Age ~ poly(Wear, rank, raw = T), data = data)
-    pred <- predict(model, newdata = wear, interval = interval, level = level)
+    if(mars.int == TRUE){
+      new.wear <- wear
+      MARS <- earth(age.data ~ wear.data, data, varmod.method = varmod.method, nfold = nfold, ncross = ncross)
+      pred <- predict(MARS, newdata = new.wear, type = "earth", interval = "pint", level = level)
+    }else{
+      pred <- predict(model, newdata = wear, interval = interval, level = level)
+    }
   }else{
     new.wear <- wear
     age.data <- data[,1]

@@ -6,12 +6,13 @@
 #'@param model Character. Choice of regression model. "linear", "quadratic", and "cubic" are supported.
 #'@param interval The type of age interval used. Can be either "prediction" or "confidence" intervals.
 #'@param level Determines the level of confidence or prediction intervals. A number between 0 and 1 (not inclusive).
+#'@param mars.int Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'TRUE'.
 #'@return A plot of the entered data.
 #'@import ggplot2
 #'@importFrom grDevices rgb
 #'@importFrom stats lm qt sd
 #Base plot
-BAM.plot2 <- function(x, y, model, interval, level){
+BAM.plot2 <- function(x, y, model, interval, level, mars.int){
   data <- as.data.frame(cbind(y, x))
   n <- as.numeric(length(y))
   if(model == "linear" | model == "quadratic" | model == "cubic"){
@@ -26,6 +27,17 @@ BAM.plot2 <- function(x, y, model, interval, level){
   s.lin <- lin.out$sigma
   s.quad <- quad.out$sigma
   s.cub <- cub.out$sigma
+  if(mars.int == TRUE){
+    MARS <- earth(y ~ x, data, varmod.method = "earth", nfold = n - 1, ncross = 3)
+    pred.mars <- predict(MARS, type = "earth", interval = "pint", level = level)
+    Int <- (pred.mars[,3] - pred.mars[,2])/2
+    upp.int.lin <- lin$fitted.values + Int
+    low.int.lin <- lin$fitted.values - Int
+    upp.int.quad <- quad$fitted.values + Int
+    low.int.quad <- quad$fitted.values - Int
+    upp.int.cub <- cub$fitted.values + Int
+    low.int.cub <- cub$fitted.values - Int
+  }else{
 #Linear shaded region
   Int.lin <- Interval(x, x, interval = interval, level = level, df = lin$df.residual, s = lin.out$sigma)
   upp.int.lin <- lin$fitted.values + Int.lin
@@ -38,6 +50,7 @@ BAM.plot2 <- function(x, y, model, interval, level){
   Int.cub <- Interval(x, x, interval = interval, level = level, df = quad$df.residual, s = quad.out$sigma)
   upp.int.cub <- cub$fitted.values + Int.cub
   low.int.cub <- cub$fitted.values - Int.cub
+  }
  }else if(model == "mars"){
    interval <- "pint"
    mars <- earth(y ~ x, data, varmod.method = "earth", nfold = n-1, ncross = 3)

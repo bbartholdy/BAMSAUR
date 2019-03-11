@@ -29,13 +29,12 @@ BAMSAUR.bff2 <- function(data, interval = "prediction", level = 0.68, varmod.met
   pred.mars <- cbind(age.data, pred.mars$fit, (pred.mars$upr - pred.mars$lwr)/2, pred.mars$lwr, pred.mars$upr)
   colnames <- c("age", "estimate", "+- years", "lower", "upper")
   out.mars <- summary(MARS)
-  mars.PRESS <- round(sum(MARS$residuals^2),2)
   mars.plot <- BAM.plot(MARS, data, interval, level)
   mars.rsq <- round(MARS$rsq,2)
   mars.gcv <- round(MARS$gcv,2)
   int.mars <- round(pred.mars[,3], 2)
   mars.prec <- mean(int.mars)
-  mars.eval <- plot(MARS)
+  #mars.eval <- plot(MARS)
 #cubic regression
   wear2.data <- wear.data^2
   wear3.data <- wear.data^3
@@ -120,32 +119,38 @@ BAMSAUR.bff2 <- function(data, interval = "prediction", level = 0.68, varmod.met
   }
 
 #LOOCV of the data
-CV.cub <- BAMSAUR.LOOCV(cub, interval = interval, level = level)
-CV.quad <- BAMSAUR.LOOCV(quad, interval = interval, level = level)
-CV.lin <- BAMSAUR.LOOCV(lin, interval = interval, level = level)
-CV.mars <- BAMSAUR.LOOCV(MARS, data = data, interval = interval, level = level)
-#Creation of the plots
-Int.cub <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = quad.df, s = quad.s)
-  upp.int.cub <- cub.fitted + Int.cub
-  low.int.cub <- cub.fitted - Int.cub
+ CV.cub <- BAMcv.lm(cub, interval = interval, level = level)
+ CV.quad <- BAMcv.lm(quad, interval = interval, level = level)
+ CV.lin <- BAMcv.lm(lin, interval = interval, level = level)
+ CV.mars <- BAMcv.mars(MARS, data = data, level = level)
+ mars.PRESS <- sum(CV.mars$out$difference^2)
 
-Int.quad <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = quad.df, s = quad.s)
-  upp.int.quad <- quad.fitted + Int.quad
-  low.int.quad <- quad.fitted - Int.quad
+#Age intervals
+ pred.cub <- suppressWarnings(predict(cub, interval = interval, level = level))
+ Int.cub <- (pred.cub[,3] - pred.cub[,2]) / 2
+ upp.int.cub <- cub.fitted + Int.cub
+ low.int.cub <- cub.fitted - Int.cub
 
-Int.lin <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = lin.df, s = lin.s)
-  upp.int.lin <- lin.fitted + Int.lin
-  low.int.lin <- lin.fitted - Int.lin
+ pred.quad <- suppressWarnings(predict(quad, interval = interval, level = level))
+ Int.quad <- (pred.quad[,3] - pred.quad[,2]) / 2
+ upp.int.quad <- quad.fitted + Int.quad
+ low.int.quad <- quad.fitted - Int.quad
+
+ pred.lin <- suppressWarnings(predict(lin, interval = interval, level = level))
+ Int.lin <- (pred.lin[,3] - pred.lin[,2])/2
+ upp.int.lin <- lin.fitted + Int.lin
+ low.int.lin <- lin.fitted - Int.lin
+
 Int.lin <- round(Int.lin, 2)
 Int.quad<- round(Int.quad, 2)
 Int.cub <- round(Int.cub, 2)
 
+#Creation of the plots
 requireNamespace("ggfortify")
 cub.eval <- autoplot(cub)
 quad.eval <- autoplot(quad)
 lin.eval <- autoplot(lin)
 
-#Plots
 lin.plot <- BAM.plot(lin, interval = interval, level = level)
 quad.plot <- BAM.plot(quad, interval = interval, level = level)
 cub.plot <- BAM.plot(cub, interval = interval, level = level)
@@ -183,7 +188,7 @@ cat("Accuracy:"); cat("\t"); cat(round(CV.mars$accuracy, digits = 2)); cat("%");
 cat("Average range"); cat("\t"); cat("+-"); cat(" "); cat(mars.prec); cat(" "); cat("years"); cat("\n")
 cat("\t"); cat("(min, max: "); cat(min(int.mars));cat(", "); cat(max(int.mars)); cat(")"); cat("\n")
 
-  invisible(list("lin.plot" = lin.plot, "quad.plot" =  quad.plot, "cub.plot" = cub.plot, "mars.plot" = mars.plot, "linplot.eval" = lin.eval, "quadplot.eval" = quad.eval, "cubplot.eval" = cub.eval, "marsplot.eval" = mars.eval,
+  invisible(list("lin.plot" = lin.plot, "quad.plot" =  quad.plot, "cub.plot" = cub.plot, "mars.plot" = mars.plot, "linplot.eval" = lin.eval, "quadplot.eval" = quad.eval, "cubplot.eval" = cub.eval,
                  "linear" = out.lin, "quadratic" = out.quad, "cubic" = out.cub, "mars" = out.mars, "mars.model" = MARS,
                  "linAIC" = lin.aic, "quadAIC" = quad.aic, "cubAIC" = cub.aic, "linBIC" = lin.bic, "quadBIC" = quad.bic, "cubBIC" = cub.bic, "linPRESS" = lin.PRESS, "quadPRESS" = quad.SSres, "cubPRESS" = cub.PRESS, "marsPRESS" = mars.PRESS,
                  "lin.data" = CV.lin$out, "quad.data" = CV.quad$out, "cub.data" = CV.cub$out, "mars.data" = CV.mars$out,
