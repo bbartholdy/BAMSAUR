@@ -37,11 +37,11 @@ The BAMSAUR.mars function serves the same purpose as the BAMSAUR function, but u
 Examples:
 
 ```r
-#The following example calculates the ages-at-death with 68%PIs of 10 random wear scores
+#The following example calculates the ages-at-death with MARS 68%PIs of 10 random wear scores
 wear <- runif(10,0,16)
 BAMSAUR(wear)
 #Ages-at-death using a linear model and 95%CIs
-BAMSAUR(wear, rank = 1, interval = "confidence", level = 0.95)
+BAMSAUR(wear, rank = 1, interval = "confidence", level = 0.95, mars.int = F)
 
 #Age-at-death calculation using MARS
 wear <- runif(10,0,16)
