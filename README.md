@@ -26,10 +26,10 @@ The method was developed on Middenbeemster, a 19th century Dutch skeletal collec
 
 BAMSAUR age-at-death estimation
 
-`BAMSAUR(wear, data = NULL, pop = "MB11", rank = 2, interval = "prediction", level = 0.68, ...)`
+`BAMSAUR(wear, data = NULL, pop = "MB11", rank = 2, interval = "prediction", level = 0.68, mars.int = TRUE, ...)`
 `BAMSAUR.mars(wear, data = NULL, pop = "MB11", level = 0.68, varmod.method = "earth", nfold = n-1, ncross = 3)`
 
-The main function which can be used to predict age-at-death based on dental wear by entering an obtained wear score, following the dental wear method outlined in the main article (Bartholdy et al., under review). The Middenbeemster data is built-in, so if pop = "MB11" is chosen, the data input is not required. If pop = "other", a data frame with a column for age and a second column for wear scores can be inserted. The function returns the input wear score, the age prediction, age range as +- years, and lower and upper intervals. The default method is a quadratic (rank = 2) model with 68%PIs, but "confidence" intervals and any level between 0 and 1 (0 - 100%), not inclusive, can be chosen. 
+The main function which can be used to predict age-at-death based on dental wear by entering an obtained wear score, following the dental wear method outlined in the main article (Bartholdy et al., under review). The Middenbeemster data is built-in, so if pop = "MB11" is chosen, the data input is not required. If pop = "other", a data frame with a column for age and a second column for wear scores can be inserted. The function returns the input wear score, the age prediction, age range as +- years, and lower and upper intervals. The default method is a quadratic (rank = 2) model with 68%PIs, but "confidence" intervals and any level between 0 and 1 (0 - 100%), not inclusive, can be chosen. The input 'mars.int' allows the user to apply MARS-sized intervals to the estimates from simple regression models. The recommended setting for estimations based on the MB11 reference sample is TRUE, as this reference sample contains some individuals without documented age, and the MARS-sized age intervals can better account for this error. If 'mars.int = FALSE', regular confidence/prediction intervals are provided.
 
 The BAMSAUR.mars function serves the same purpose as the BAMSAUR function, but uses a MARS model for the age-at-death estimation. Only "prediction" intervals are supported for MARS models. The default number of cross validations (ncross) is 3 to reduce computation time.
 
