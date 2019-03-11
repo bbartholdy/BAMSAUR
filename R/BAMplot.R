@@ -22,15 +22,17 @@ if(class(object) == "lm"){
   y <- data[,1]
   x <- data[,2]
 
-Int <- Interval(x, x, interval = interval, level = level, df = df, s = s)
+  pred <- suppressWarnings(predict(object, interval = interval, level = level))
+  Int <- (pred[,3] - pred[,2]) / 2
+  #Int <- Interval(x, x, interval = interval, level = level, df = df, s = s)
 
 }else if(class(object) == "earth"){
 interval <- "pint"
 fit <- object$fitted.values
  y <- data[,1]
  x <- data[,2]
- int <- predict(object, type = "earth", interval = interval, level = level)
-Int <- (int$upr - int$lwr)/2
+ pred <- predict(object, type = "earth", interval = interval, level = level)
+ Int <- (pred[,3] - pred[,2])/2
   }
 #Base plot
   pl <- ggplot(data) + geom_point(aes(x = x, y = y), size =1.5, colour = rgb(0,0.4,0.8)) +
@@ -48,5 +50,5 @@ Int <- (int$upr - int$lwr)/2
     geom_ribbon(data = data, aes(x = x, ymin=low.int, ymax=upp.int), alpha=0.1, inherit.aes=F, fill="112233") +
     geom_line(data = data, aes(x = x, y = fit), colour = "#555555", size = 1)
 
-  print(plot)
+  return(plot)
 }

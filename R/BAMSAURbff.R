@@ -68,14 +68,11 @@ BAMSAUR.bff <- function(data, interval = "prediction", level = 0.68, varmod.meth
     pred.mars <- cbind(age.data, pred.mars$fit, (pred.mars$upr - pred.mars$lwr)/2, pred.mars$lwr, pred.mars$upr)
     colnames <- c("age", "estimate", "+- years", "lower", "upper")
     pred.mars <- as.data.frame(pred.mars)
-    warning("mars.PRESS is actually RSS")
-    mars.PRESS <- round(sum(MARS$residuals^2),2)
     mars.plot <- BAM.plot(MARS, data, interval, level)
     mars.rsq <- round(MARS$rsq,2)
     mars.gcv <- round(MARS$gcv,2)
     int.mars <- round(pred.mars[,3], 2)
     mars.prec <- round(mean(int.mars),2)
-    mars.eval <- plot(MARS)
 #cubic regression
     wear2.data <- wear.data^2
     wear3.data <- wear.data^3
@@ -158,10 +155,15 @@ BAMSAUR.bff <- function(data, interval = "prediction", level = 0.68, varmod.meth
   }
 
 #LOOCV of the data
-CV.cub <- BAMSAUR.LOOCV(cub, interval=interval, level=level)
+CV.cub <- BAMSAUR:::BAMcv.lm(cub, interval = interval, level = level)
+#CV.cub <- BAMSAUR.LOOCV(cub, interval=interval, level=level)
+
 CV.quad <- BAMSAUR.LOOCV(quad, interval=interval, level = level)
 CV.lin <- BAMSAUR.LOOCV(lin, interval = interval, level = level)
-CV.mars <- BAMSAUR.LOOCV(MARS, data, interval = "prediction", level = level)
+
+#CV.mars <- BAMSAUR.LOOCV(MARS, data, interval = "prediction", level = level)
+CV.mars <- BAMSAUR:::BAMcv.mars(MARS, data = data, level = level)
+mars.PRESS <- sum(CV.mars$out$difference^2)
 #Accuracy table output
 acc.table <- as.data.frame(matrix(nrow = 4, ncol = 3), row.names = c("linear", "quadratic", "cubic", "MARS"))
 acc.table[1,1] <- CV.lin$accuracy
@@ -176,7 +178,7 @@ acc.table[3,3] <- CV.cub$accuracy.2
 acc.table[4,1] <- CV.mars$accuracy
 acc.table[4,2] <- CV.mars$accuracy.1
 acc.table[4,3] <- CV.mars$accuracy.2
-colnames(acc.table) <- c("total", "< 1yr", "< 2yrs")
+colnames(acc.table) <- c("total", "1yr", "2yrs")
 
 #Creation of the plots
 lin.plot <- BAM.plot(lin, interval=interval, level=level)
@@ -184,15 +186,21 @@ quad.plot <- BAM.plot(quad, interval=interval, level=level)
 cub.plot <- BAM.plot(cub, interval=interval, level=level)
 
 #Age ranges for calculation of precision
-Int.cub <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = quad.df, s = quad.s)
+pred.cub <- suppressWarnings(predict(cub, interval = interval, level = level))
+Int.cub <- (pred.cub[,3] - pred.cub[,2]) / 2
+#Int.cub <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = quad.df, s = quad.s)
   upp.int.cub <- cub.fitted + Int.cub
   low.int.cub <- cub.fitted - Int.cub
 
-Int.quad <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = quad.df, s = quad.s)
+  pred.quad <- suppressWarnings(predict(quad, interval = interval, level = level))
+  Int.quad <- (pred.quad[,3] - pred.quad[,2]) / 2
+  #Int.quad <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = quad.df, s = quad.s)
   upp.int.quad <- quad.fitted + Int.quad
   low.int.quad <- quad.fitted - Int.quad
 
-Int.lin <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = lin.df, s = lin.s)
+  pred.lin <- suppressWarnings(predict(lin, interval = interval, level = level))
+  Int.lin <- (pred.lin[,3] - pred.lin[,2])/2
+  #Int.lin <- Interval(wear = wear.data, wear.data = wear.data, interval = interval, level = level, df = lin.df, s = lin.s)
   upp.int.lin <- lin.fitted + Int.lin
   low.int.lin <- lin.fitted - Int.lin
 Int.lin <- round(Int.lin, 2)
@@ -222,16 +230,16 @@ cub.prec <- round(mean(Int.cub), 2)
   cat("\n"); cat(message("Cubic model"));
   cat("R-squared:"); cat("\t"); cat(round(cub.rsq, digits = 2)); cat("\n")
   cat("PRESS:"); cat("\t"); cat("\t"); cat(round(cub.PRESS, digits = 2)); cat("\n")
-  cat("AIC:"); cat("\t"); cat("\t"); cat(cub.aic); cat("\n")
-  cat("BIC:"); cat("\t"); cat("\t"); cat(cub.bic); cat("\n")
+  cat("AIC:"); cat("\t"); cat("\t"); cat(round(cub.aic, 2)); cat("\n")
+  cat("BIC:"); cat("\t"); cat("\t"); cat(round(cub.bic, 2)); cat("\n")
   cat("Accuracy:"); cat("\t"); cat(round(CV.cub$accuracy, digits = 2)); cat("%"); cat("\n")
   cat("Average range:"); cat("\t"); cat("+-"); cat(" "); cat(cub.prec); cat(" "); cat("years"); cat("\n")
   cat("\t"); cat("(min, max: "); cat(min(Int.cub));cat(", "); cat(max(Int.cub)); cat(")"); cat("\n")
   cat("\n"); cat(message("MARS"));
   cat("R-squared:"); cat("\t"); cat(mars.rsq); cat("\n")
-  cat("RSS:"); cat("\t"); cat("\t"); cat(mars.PRESS); cat("\n")
+  cat("PRESS:"); cat("\t"); cat("\t"); cat(round(mars.PRESS, 2)); cat("\n")
   cat("GCV:"); cat("\t"); cat("\t"); cat(mars.gcv); cat("\n")
-  cat("Accuracy:"); cat("\t"); cat(round(CV.mars$accuracy, digits = 2)); cat("\n")
+  cat("Accuracy:"); cat("\t"); cat(round(CV.mars$accuracy, digits = 2)); cat("%"); cat("\n")
   cat("Average range"); cat("\t"); cat("+-"); cat(" "); cat(mars.prec); cat(" "); cat("years"); cat("\n")
   cat("\t"); cat("(min, max: "); cat(min(int.mars));cat(", "); cat(max(int.mars)); cat(")"); cat("\n")
 
