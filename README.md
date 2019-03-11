@@ -68,24 +68,11 @@ MBex <- BAMSAUR.bff(MBsimple)
 MBex$quad.plot
 ```
 
-Leave-one-out cross validation
-
-`BAMSAUR.LOOCV(object, data, interval = "prediction", level = 0.68)`
-Leave-one-out cross validation function to calculate accuracies of the regression models. The calculated age ranges are incorporated into the LOOCV, and a case is considered accurate if the known age is contained within the age range for the predicted age. This function is incorporated into the BAMSAUR.bff function. The supported objects are "lm" and "earth". The function returns a data frame containing the known ages-at-death, the predicted ages-at-death, the difference between known and predicted, and the upper and lower age intervals.
-
-Examples:
-```r
-age <- MBsimple$age
-wear <- MBsimple$wear
-lin <- lm(age ~ wear)
-BAMSAUR.LOOCV(lin)
-```
-
 BAMSAUR shiny app
 
 `runBAM()`
 
-This launches the BAMSAUR shiny app, which has the same functionality as the individual functions.
+This launches the BAMSAUR shiny app, which has similar functionality as the individual functions.
 
 
 Example:
