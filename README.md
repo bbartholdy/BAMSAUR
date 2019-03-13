@@ -24,7 +24,7 @@ The method was developed on Middenbeemster, a 19th century Dutch skeletal collec
 
 # Functions
 
-BAMSAUR age-at-death estimation
+## BAMSAUR age-at-death estimation
 
 `BAMSAUR(wear, data = NULL, pop = "MB11", rank = 2, interval = "prediction", level = 0.68, mars.int = TRUE, ...)`
 
@@ -51,7 +51,7 @@ data <- MBsimple[1:25]
 BAMSAUR.mars(wear, data = data, pop = "other", level = 0.9)
 ```
 
-BAMSAUR best-fit function
+## BAMSAUR best-fit function
 
 "It's not the sample size that matters, it's the goodness-of-fit!"
 
@@ -68,7 +68,7 @@ MBex <- BAMSAUR.bff(MBsimple)
 MBex$quad.plot
 ```
 
-BAMSAUR shiny app
+## BAMSAUR shiny app
 
 `runBAM()`
 
@@ -80,7 +80,7 @@ Example:
 ##Not run: runBAM()
 ```
 
-BAMSAUR data
+## BAMSAUR data
 
 The BAMSAUR data contains two datasets: MBsimple and MBdata. MBsimple contains a column with known ages-at-death and associated wear scores for the Middenbeemster sample, which is built-in to the BAMSAUR and BAMSAUR.mars functions.
 MBdata contains all the wear scores for the individual teeth of each specimen that was used for the analysis, and is included for sharing and reproducibility purposes.
