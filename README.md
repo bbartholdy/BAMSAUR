@@ -1,7 +1,7 @@
 # BAMSAUR
 
-This package provides functions for the age-at-death estimation of nonadult human skeletal remains based on dental wear. The method was developed using a Dutch post-Medieval reference population; however, the package also allows the inclusion of other (more appropriate) reference samples. The main function allows the age-at-death estimation of non-adults based on a single wear score calculated from all available teeth, and additional functions allow the user to upload and evaluate their own reference sample, from which to base the age-at-death estimations.
-Users who are not familiar with the R-environment can also take advantage of a user-friendly graphic user interface (GUI).
+This package provides functions for the age-at-death estimation of nonadult human skeletal remains based on dental wear. The method was developed using a Dutch post-Medieval reference population; however, the package also allows the inclusion of other (more appropriate) reference samples. The main function allows the age-at-death estimation of nonadults based on a single wear score calculated from all available teeth, and additional functions allow the user to upload and evaluate their own reference sample, from which to base the age-at-death estimations.
+Users who are not familiar with the R-environment can also take advantage of a user-friendly graphical user interface (GUI).
 
 # Installation
 1. To install BAMSAUR, R must first be installed (https://cran.r-project.org/).
@@ -24,9 +24,10 @@ The method was developed on Middenbeemster, a 19th century Dutch skeletal collec
 
 # Functions
 
-BAMSAUR age-at-death estimation
+## BAMSAUR age-at-death estimation
 
 `BAMSAUR(wear, data = NULL, pop = "MB11", rank = 2, interval = "prediction", level = 0.68, mars.int = TRUE, ...)`
+
 `BAMSAUR.mars(wear, data = NULL, pop = "MB11", level = 0.68, varmod.method = "earth", nfold = n-1, ncross = 3)`
 
 The main function which can be used to predict age-at-death based on dental wear by entering an obtained wear score, following the dental wear method outlined in the main article (Bartholdy et al., under review). The Middenbeemster data is built-in, so if pop = "MB11" is chosen, the data input is not required. If pop = "other", a data frame with a column for age and a second column for wear scores can be inserted. The function returns the input wear score, the age prediction, age range as +- years, and lower and upper intervals. The default method is a quadratic (rank = 2) model with 68%PIs, but "confidence" intervals and any level between 0 and 1 (0 - 100%), not inclusive, can be chosen. The input 'mars.int' allows the user to apply MARS-sized intervals to the estimates from simple regression models. The recommended setting for estimations based on the MB11 reference sample is TRUE, as this reference sample contains some individuals without documented age, and the MARS-sized age intervals can better account for this error. If 'mars.int = FALSE', regular confidence/prediction intervals are provided.
@@ -36,11 +37,11 @@ The BAMSAUR.mars function serves the same purpose as the BAMSAUR function, but u
 Examples:
 
 ```r
-#The following example calculates the ages-at-death with 68%PIs of 10 random wear scores
+#The following example calculates the ages-at-death with MARS 68%PIs of 10 random wear scores
 wear <- runif(10,0,16)
 BAMSAUR(wear)
 #Ages-at-death using a linear model and 95%CIs
-BAMSAUR(wear, rank = 1, interval = "confidence", level = 0.95)
+BAMSAUR(wear, rank = 1, interval = "confidence", level = 0.95, mars.int = F)
 
 #Age-at-death calculation using MARS
 wear <- runif(10,0,16)
@@ -50,7 +51,7 @@ data <- MBsimple[1:25]
 BAMSAUR.mars(wear, data = data, pop = "other", level = 0.9)
 ```
 
-BAMSAUR best-fit function
+## BAMSAUR best-fit function
 
 "It's not the sample size that matters, it's the goodness-of-fit!"
 
@@ -67,24 +68,11 @@ MBex <- BAMSAUR.bff(MBsimple)
 MBex$quad.plot
 ```
 
-Leave-one-out cross validation
-
-`BAMSAUR.LOOCV(object, data, interval = "prediction", level = 0.68)`
-Leave-one-out cross validation function to calculate accuracies of the regression models. The calculated age ranges are incorporated into the LOOCV, and a case is considered accurate if the known age is contained within the age range for the predicted age. This function is incorporated into the BAMSAUR.bff function. The supported objects are "lm" and "earth". The function returns a data frame containing the known ages-at-death, the predicted ages-at-death, the difference between known and predicted, and the upper and lower age intervals.
-
-Examples:
-```r
-age <- MBsimple$age
-wear <- MBsimple$wear
-lin <- lm(age ~ wear)
-BAMSAUR.LOOCV(lin)
-```
-
-BAMSAUR shiny app
+## BAMSAUR shiny app
 
 `runBAM()`
 
-This launches the BAMSAUR shiny app, which has the same functionality as the individual functions.
+This launches the BAMSAUR shiny app, which has similar functionality as the individual functions.
 
 
 Example:
@@ -92,7 +80,7 @@ Example:
 ##Not run: runBAM()
 ```
 
-BAMSAUR data
+## BAMSAUR data
 
 The BAMSAUR data contains two datasets: MBsimple and MBdata. MBsimple contains a column with known ages-at-death and associated wear scores for the Middenbeemster sample, which is built-in to the BAMSAUR and BAMSAUR.mars functions.
 MBdata contains all the wear scores for the individual teeth of each specimen that was used for the analysis, and is included for sharing and reproducibility purposes.
