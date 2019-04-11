@@ -1,15 +1,15 @@
 Package: BAMSAUR
 Title: Nonadult Age-at-Death Estimation Using Dental Wear
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: person("Bjørn Peare", "Bartholdy", email = "bpbartholdy@gmail.com", role = c("aut", "cre"))
-Description: A nonadult age-at-death estimation method using dental wear, intended for use on human skeletal remains. Other functions include sample evaluation, accuracy calculations using leave-one-out cross validation for linear, quadratic, and cubic regression incorporating age ranges, and a user-friendly GUI.
+Description: A nonadult age-at-death estimation method using dental wear, intended for use on human skeletal remains. Other functions include sample evaluation, accuracy calculations using leave-one-out cross validation for linear, quadratic, and cubic regression, and MARS, incorporating age ranges, and a user-friendly GUI.
 Depends: R (>= 3.5.0)
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
 Imports: AICcmodavg,
-    earth (>= 4.7.0),
+    earth (>= 5.1.0),
     ggfortify (>= 0.4.5),
     ggplot2,
     shiny (>= 1.2.0)

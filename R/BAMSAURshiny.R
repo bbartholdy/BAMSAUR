@@ -59,10 +59,19 @@ BAMSAURshiny <- function(wear, data = NULL, model = "quadratic", pop = "MB11", i
     model <- lm(Age ~ poly(Wear, rank, raw = T), data = data)
     if(mars.int == TRUE){
       new.wear <- wear
+      pred <- predict(model, newdata = wear, interval = interval, level = level)
       MARS <- earth(age.data ~ wear.data, data, varmod.method = varmod.method, nfold = nfold, ncross = ncross)
-      pred <- predict(MARS, newdata = new.wear, type = "earth", interval = "pint", level = level)
+      pred.mars <- predict(MARS, newdata = new.wear, type = "earth", interval = "pint", level = level)
+      age.est <- round(pred[,1], 2)
+      Int <- round((pred.mars[,3] - pred.mars[,2])/2, 2)
+      low <- round(pred.mars[,2],2)
+      upp <- round(pred.mars[,3],2)
     }else{
       pred <- predict(model, newdata = wear, interval = interval, level = level)
+      age.est <- round(pred[,1], 2)
+      Int <- round((pred[,3] - pred[,2])/2, 2)
+      low <- round(pred[,2],2)
+      upp <- round(pred[,3],2)
     }
   }else{
     new.wear <- wear
@@ -70,11 +79,11 @@ BAMSAURshiny <- function(wear, data = NULL, model = "quadratic", pop = "MB11", i
     wear.data <- data[,2]
     MARS <- earth(age.data ~ wear.data, data, varmod.method = varmod.method, nfold = nfold, ncross = ncross)
     pred <- predict(MARS, newdata = new.wear, type = "earth", interval = "pint", level = level)
-  }
-  age.est <- round(pred[,1], 2)
-  Int <- round((pred[,3] - pred[,2])/2, 2)
-  low <- round(pred[,2],2)
-  upp <- round(pred[,3],2)
+    age.est <- round(pred[,1], 2)
+    Int <- round((pred[,3] - pred[,2])/2, 2)
+    low <- round(pred[,2],2)
+    upp <- round(pred[,3],2)
+    }
 
 #output
   result <- cbind(wear, age.est, Int, low, upp)

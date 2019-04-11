@@ -7,7 +7,7 @@
 #' @param pop Character. Indicates which reference population to use. "MB11" and "other" are supported. When "other" is selected, the data input is required.
 #' @param interval Character. The type of age interval used. Can be either "prediction" or "confidence" intervals. The default is set at "prediction".
 #' @param level Numeric. Determines the level of confidence or prediction intervals. Is a number between 0 and 1 (not inclusive). 0.68, 0.90, or 0.95 is recommended. The default is set at 0.68.
-#' @param mars.int Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'TRUE'.
+#' @param mars.int Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'FALSE'.
 #' @param ... Can be used to pass additional arguments to the lm function.
 #' @details This function uses the "lm" function for the regression analyses.
 #'
@@ -29,7 +29,7 @@
 #' @export BAMSAUR
 #' @keywords Age-at-death estimation
 
-BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", interval = "prediction", level = 0.68, mars.int = T, ...){
+BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", interval = "prediction", level = 0.68, mars.int = F, ...){
 
   wear <- as.data.frame(wear)
   colnames(wear) <- "Wear"
@@ -46,6 +46,7 @@ BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", interval = "predi
     wear.data <- data[,2]
   }
   n <- as.numeric(length(age.data))
+  maxAge <- max(age.data)
 #regression models
   model <- lm(Age ~ poly(Wear, rank, raw = T), data = data, ...)
   pred <- predict(model, newdata = wear, interval = interval, level = level)
@@ -62,7 +63,11 @@ if(mars.int == TRUE){
   upp <- round(pred[,3],2)
 }
 
+maxEst <- max(age.est)
 #output
+if(maxEst > maxAge){
+  warning("One or more of the predicted ages are beyond the range of the reference sample")
+  }
   result <- cbind(wear, age.est, round(Int, 2), round(low, 2), round(upp,2))
   colnames(result) <- c("wear", "estimate", "+- years", "lower", "upper")
   result <- as.data.frame(result)

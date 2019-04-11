@@ -72,7 +72,7 @@ MBex <- BAMSAUR.bff(MBsimple)
 MBex$quad.plot
 }
 \seealso{
-\code{\link[earth]{earth.formula}}
+\code{\link[earth]{earth}}
 
 \code{\link[stats]{lm}}
 }

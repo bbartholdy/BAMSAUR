@@ -42,7 +42,7 @@ ui <- fluidPage(
                             numericInput("wear1", label = "Insert wear score", value = 0, min = 0),
                             radioButtons("model1", label = "Select model", choices = c("linear", "quadratic", "cubic", "mars"), selected = "quadratic"),
                             radioButtons("interval1", label = "Select age interval type", choices = c("prediction", "confidence")),
-                            checkboxInput("mars.int1", label = "MARS intervals", value = TRUE),
+                            checkboxInput("mars.int1", label = "MARS intervals", value = FALSE),
                             sliderInput("level1", label = "Select age interval level(%)", min = 1, max = 100, value = 68, step = 1),
                             conditionalPanel(
                               condition = "input.model1 == 'mars'",

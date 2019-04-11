@@ -23,21 +23,22 @@ BAMcv.lm <- function(object, interval = "prediction", level = 0.68){
   df <- object$df.residual
   summ.lm <- summary(object)
   s <- summ.lm$sigma
-  age.data <- data.lm[,1]
-  wear.data <- data.lm[,2]
+  age.data <- as.numeric(data.lm[,1])
+  wear.data <- as.numeric(data.lm[,2])
   n <- as.numeric(length(age.data))
-
-  #lm objects
+  wear.data <- wear.data[1:n]
+#lm objects
   #LOOCV
-  est <- predict(object)
-  res <- est - age.data
+  res <- rstandard(object, type = "predictive")
+  est <- age.data - res
   age.diff <- res
-  int <- Interval(wear.data, wear.data, interval = interval, level = level, df = df, s = s)
-  low <- est - int
-  upp <- est + int
+  pred <- suppressWarnings(predict(object, interval = interval, level = level))
+  int <- (pred[,3] - pred[,2])/2
+  low <- pred[,2]
+  upp <- pred[,3]
   cv.out <- cbind(age.data, est, age.diff, low, upp)
-  colnames(cv.out) <- c("age", "est", "diff", "low", "upp")
   cv.out <- as.data.frame(cv.out)
+  colnames(cv.out) <- c("age", "est", "diff", "low", "upp")
 
   #Quantifying absolute accuracy, i.e. if the predicted range contains the actual known age
   #The lower intervals are converted to integers in order to capture the appropriate accuracy (otherwise a prediction of 5.3 for a 5 year old would be classified as wrong)

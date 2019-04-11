@@ -43,7 +43,7 @@
 #'  \item{\code{accuracy}}{A table with the percentage of estimates whose age ranges contain the actual age, the percentage of estimates within 1 year of the actual age, and within 2 years of the actual age.}
 #' }
 #' @note If the slope of the regression is not statistically different (2 standard deviations) from 0 or 1, a warning message will appear.
-#' @seealso \code{\link[earth]{earth.formula}}
+#' @seealso \code{\link[earth]{earth}}
 #' @seealso \code{\link[stats]{lm}}
 #' @example inst/BAMSAURbffex.R
 #' @import AICcmodavg ggplot2
