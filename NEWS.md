@@ -3,6 +3,7 @@
 Updates to the BAMSAUR package
 
 ## BAMSAUR_0.0.0.9001
+## 11-04-2019
 
 * Erroneous code corrected in the BAMcv.lm function, which was providing incorrect accuracy rates.
 
