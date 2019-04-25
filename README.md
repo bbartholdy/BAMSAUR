@@ -87,7 +87,7 @@ MBdata contains all the wear scores for the individual teeth of each specimen th
 
 # References
 
-Bartholdy, B.P., Hoogland, M.L.P, and Waters-Rist, A., under review. How Old Are You Now? A new ageing method for nonadults based on dental wear. International Journal of Osteoarchaeology.
+Bartholdy, B.P., Hoogland, M.L.P, and Waters-Rist, A., under review. How Old Are You Now? A new ageing method for nonadults based on dental wear. International Journal of Osteoarchaeology. doi: 10.1002/oa.2758.
 
 Hadley Wickham, Jim Hester and Winston Chang (2018). devtools: Tools to Make Developing R Packages Easier. R package version 1.13.6. https://CRAN.R-project.org/package=devtools
 
