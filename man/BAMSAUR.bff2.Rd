@@ -4,8 +4,7 @@
 \alias{BAMSAUR.bff2}
 \title{Sample evaluation}
 \usage{
-BAMSAUR.bff2(data, interval = "prediction", level = 0.68,
-  varmod.method = "earth", nfold = n - 1, ncross = 3)
+BAMSAUR.bff2(data, interval = "prediction", level = 0.68)
 }
 \arguments{
 \item{data}{Data frame, or object that can be coerced into a data frame, containing the ages and wear scores of individuals from a sample.}
@@ -13,12 +12,6 @@ BAMSAUR.bff2(data, interval = "prediction", level = 0.68,
 \item{interval}{Character. The type of age interval used. Can be either "prediction" or "confidence" intervals.}
 
 \item{level}{Numeric. Determines the level of confidence or prediction intervals. A number between 0 and 1 (not inclusive).}
-
-\item{varmod.method}{Character. Method for creating the variance model in the 'earth' function. See 'earth' package for more details.}
-
-\item{nfold}{Numeric. The number of folds to be used in the cross validation.}
-
-\item{ncross}{Numeric. Number of cross validations. Default is set at 3 to reduce computation time.}
 }
 \description{
 This function is a modified version of the BAMSAUR.bff function developed to work in the BAMSAUR shiny app, and is not intended for use in the R-console.

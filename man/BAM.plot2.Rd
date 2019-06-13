@@ -4,7 +4,7 @@
 \alias{BAM.plot2}
 \title{Creates a plot from dental wear data}
 \usage{
-BAM.plot2(x, y, model, interval, level, mars.int)
+BAM.plot2(x, y, model, interval, level)
 }
 \arguments{
 \item{x}{Numeric. Vector of wear scores.}
@@ -16,8 +16,6 @@ BAM.plot2(x, y, model, interval, level, mars.int)
 \item{interval}{The type of age interval used. Can be either "prediction" or "confidence" intervals.}
 
 \item{level}{Determines the level of confidence or prediction intervals. A number between 0 and 1 (not inclusive).}
-
-\item{mars.int}{Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'TRUE'.}
 }
 \value{
 A plot of the entered data.

@@ -17,14 +17,14 @@ BAMSAUR.1 <-  eventReactive(input$calc1, {
                                 sep = input$sep1,
                                 dec = input$dec1)
                 }
-  BAMSAUR:::BAMSAURshiny(wear = input$wear1, data = inData1, pop = input$pop1, model = input$model1, interval = input$interval1, level = input$level1/100, varmod.method = input$varmod.method1, nfold = input$nfold1, ncross = input$ncross1, mars.int = input$mars.int1)})
+  BAMSAUR:::BAMSAURshiny(wear = input$wear1, data = inData1, pop = input$pop1, model = input$model1, interval = input$interval1, level = input$level1/100)})
   output$estimate1 <- renderText({ result1 <- BAMSAUR.1()
   paste(result1$estimate, " +- ", result1$`+- years`, " years")
   })
   output$range1 <- renderText({result1 <- BAMSAUR.1()
   paste(result1$lower, " - ", result1$upper, " years")
   })
-  BAMplot.1 <- eventReactive(input$calc1, {BAMSAUR:::BAM.plot2(x = MBsimple$Wear, y = MBsimple$Age, model = input$model1, interval = input$interval1, level = input$level1/100, mars.int = input$mars.int1)})
+  BAMplot.1 <- eventReactive(input$calc1, {BAMSAUR:::BAM.plot2(x = MBsimple$Wear, y = MBsimple$Age, model = input$model1, interval = input$interval1, level = input$level1/100)})
   output$plot <- renderPlot({result1 <- BAMSAUR.1()
   plot <- BAMplot.1()
   plot + ggplot2::geom_point(ggplot2::aes(x = input$wear1, y = result1$estimate), data = NULL, size = 2.5, colour = rgb(0.8,0.1,0))
@@ -46,23 +46,23 @@ BAMSAUR.1 <-  eventReactive(input$calc1, {
                header = input$header,
                sep = input$sep,
                dec = input$dec)
-  BAMSAUR:::BAMSAUR.bff2(inData3, interval = input$interval3, level = input$level3/100, varmod.method = input$varmod.method3, nfold = input$nfold3, ncross = input$ncross3)})
+  BAMSAUR:::BAMSAUR.bff2(inData3, interval = input$interval3, level = input$level3/100)})
   output$out3 <- renderPrint({result3 <- BAMSAURbff.31()
   output$out3.lin <- renderPrint(result3$linear)
   output$out3.quad <- renderPrint(result3$quadratic)
   output$out3.cub <- renderPrint(result3$cubic)
-  output$out3.mars <- renderPrint(result3$mars)
+  #output$out3.mars <- renderPrint(result3$mars)
   output$linTable3 <- renderDataTable(result3$lin.data)
   output$quadTable3 <- renderDataTable(result3$quad.data)
   output$cubTable3 <- renderDataTable(result3$cub.data)
-  output$marsTable3 <- renderDataTable(result3$mars.data)
+  #output$marsTable3 <- renderDataTable(result3$mars.data)
   output$lin3 <- renderPlot(result3$lin.plot)
   output$lineval3 <- renderPlot(result3$linplot.eval)
   output$quad3 <- renderPlot(result3$quad.plot)
   output$quadeval3 <- renderPlot(result3$quadplot.eval)
   output$cub3 <- renderPlot(result3$cub.plot)
   output$cubeval3 <- renderPlot(result3$cubplot.eval)
-  output$mars3 <- renderPlot(result3$mars.plot)
+  #output$mars3 <- renderPlot(result3$mars.plot)
   })
 
 #output for LOOCV: accuracy for set interval, % within 1 year, and % within 2 years
@@ -73,8 +73,8 @@ BAMSAUR.1 <-  eventReactive(input$calc1, {
                     result31$quad.data})
   cubData3 <- reactive({result31 <- BAMSAURbff.31()
                     result31$cub.data})
-  marsData3 <- reactive({result31 <- BAMSAURbff.31()
-                    result31$mars.data})
+  #marsData3 <- reactive({result31 <- BAMSAURbff.31()
+   #                 result31$mars.data})
 
   output$evalLin <- downloadHandler(
     filename = function() {
@@ -100,14 +100,14 @@ BAMSAUR.1 <-  eventReactive(input$calc1, {
       write.csv(cubData3(), file)
     }
   )
-  output$evalMars <- downloadHandler(
-    filename = function() {
-      paste("marsTable3", ".csv", sep = "")
-    },
-    content = function(file) {
-      write.csv(marsData3(), file)
-    }
-  )
+  #output$evalMars <- downloadHandler(
+   # filename = function() {
+    #  paste("marsTable3", ".csv", sep = "")
+    #},
+    #content = function(file) {
+    #  write.csv(marsData3(), file)
+    #}
+  #)
 
 #4. Wear data
 Wear.41 <- eventReactive(input$calc41, {score <- c(input$T11, input$T12, input$T13, input$T14, input$T15, input$T16, input$T17,

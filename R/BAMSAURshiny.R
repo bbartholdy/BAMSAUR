@@ -7,10 +7,6 @@
 #' @param pop Character. Indicates which reference population to use. "MB11" and "other" are supported. When "other" is selected, the data input is required.
 #' @param interval Character. The type of age interval used. Can be either "prediction" or "confidence" intervals. The default is set at "prediction".
 #' @param level Numeric. Determines the level of confidence or prediction intervals. Is a number between 0 and 1 (not inclusive). 0.68, 0.90, or 0.95 is recommended. The default is set at 0.68.
-#' @param varmod.method Method used to build the variance model. See ?earth for more details.
-#' @param nfold Number of folds.
-#' @param ncross Number of cross validations.
-#' @param mars.int Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'TRUE'.
 #' @details This function uses the "lm" function for the regression models, and "earth" for the MARS models.
 #'
 #' @return a data frame containing the following values:
@@ -26,10 +22,9 @@
 #'  \item{\code{upper}}{the upper bound of the age interval.}
 #' }
 #' @importFrom stats lm na.omit predict
-#' @importFrom earth earth
 #' @keywords Age-at-death estimation
 
-BAMSAURshiny <- function(wear, data = NULL, model = "quadratic", pop = "MB11", interval = "prediction", level = 0.68, varmod.method = "earth", nfold = n-1, ncross = 3, mars.int= T){
+BAMSAURshiny <- function(wear, data = NULL, model = "quadratic", pop = "MB11", interval = "prediction", level = 0.68){
 
   if(model == "linear"){
     rank <- 1
@@ -52,38 +47,16 @@ BAMSAURshiny <- function(wear, data = NULL, model = "quadratic", pop = "MB11", i
     wear.data <- data[,2]
   }
   n <- as.numeric(length(age.data))
-  if(is.null(rank) == FALSE){
+
     wear <- as.data.frame(wear)
     colnames(wear) <- "Wear"
     colnames(data) <- c("Age", "Wear")
     model <- lm(Age ~ poly(Wear, rank, raw = T), data = data)
-    if(mars.int == TRUE){
-      new.wear <- wear
-      pred <- predict(model, newdata = wear, interval = interval, level = level)
-      MARS <- earth(age.data ~ wear.data, data, varmod.method = varmod.method, nfold = nfold, ncross = ncross)
-      pred.mars <- predict(MARS, newdata = new.wear, type = "earth", interval = "pint", level = level)
-      age.est <- round(pred[,1], 2)
-      Int <- round((pred.mars[,3] - pred.mars[,2])/2, 2)
-      low <- round(pred.mars[,2],2)
-      upp <- round(pred.mars[,3],2)
-    }else{
       pred <- predict(model, newdata = wear, interval = interval, level = level)
       age.est <- round(pred[,1], 2)
       Int <- round((pred[,3] - pred[,2])/2, 2)
       low <- round(pred[,2],2)
       upp <- round(pred[,3],2)
-    }
-  }else{
-    new.wear <- wear
-    age.data <- data[,1]
-    wear.data <- data[,2]
-    MARS <- earth(age.data ~ wear.data, data, varmod.method = varmod.method, nfold = nfold, ncross = ncross)
-    pred <- predict(MARS, newdata = new.wear, type = "earth", interval = "pint", level = level)
-    age.est <- round(pred[,1], 2)
-    Int <- round((pred[,3] - pred[,2])/2, 2)
-    low <- round(pred[,2],2)
-    upp <- round(pred[,3],2)
-    }
 
 #output
   result <- cbind(wear, age.est, Int, low, upp)

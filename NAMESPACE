@@ -2,12 +2,10 @@
 
 export(BAMSAUR)
 export(BAMSAUR.bff)
-export(BAMSAUR.mars)
 export(runBAM)
 import(AICcmodavg)
 import(ggfortify)
 import(ggplot2)
-importFrom(earth,earth)
 importFrom(grDevices,rgb)
 importFrom(graphics,plot)
 importFrom(shiny,runApp)

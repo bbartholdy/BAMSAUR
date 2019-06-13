@@ -4,8 +4,7 @@
 \alias{BAMSAUR.bff}
 \title{Sample evaluation}
 \usage{
-BAMSAUR.bff(data, interval = "prediction", level = 0.68,
-  varmod.method = "earth", nfold = n - 1, ncross = 3, ...)
+BAMSAUR.bff(data, interval = "prediction", level = 0.68, ...)
 }
 \arguments{
 \item{data}{Data frame containing one column for ages-at-death and a second column for the associated wear scores.}
@@ -13,12 +12,6 @@ BAMSAUR.bff(data, interval = "prediction", level = 0.68,
 \item{interval}{Character. The type of age interval used. Can be either "prediction" or "confidence" intervals. Confidence intervals are not available for 'earth' class objects.}
 
 \item{level}{Numeric. Determines level of confidence or prediction intervals. Can be any number between 0 and 1 (not inclusive), but 0.68, 0.90, or 0.95 is recommended. To run the function without intervals, enter 0.}
-
-\item{varmod.method}{Character. Method for creating the variance model in the 'earth' function. See 'earth' package for more details.}
-
-\item{nfold}{Numeric. The number of folds to be used in the cross validation.}
-
-\item{ncross}{Numeric. Number of cross validations. Default is set at 3 to reduce computation time.}
 
 \item{...}{Additional arguments can be passed to the 'earth' function. See ?earth for more details.}
 }
@@ -34,23 +27,17 @@ It also includes a list containing the following items:
 
  \item{\code{cub.plot}}{a plot of the cubic regression with prediction/confidence intervals}
 
- \item{\code{mars.plot}}{a plot of the MARS with prediction/confidence intervals}
-
  \item{\code{linear}}{class 'lm' object from the linear regression analysis.}
 
  \item{\code{quadratic}}{class 'lm' object from the quadratic regression analysis.}
 
  \item{\code{cubic}}{class 'lm' object from the cubic regression analysis.}
 
- \item{\code{mars}}{class 'earth' object from the MARS analysis.}
-
  \item{\code{lin.data}}{the data from the linear LOOCV analysis.}
 
  \item{\code{quad.data}}{the data from the quadratic LOOCV analysis.}
 
  \item{\code{cub.data}}{the data from the quadratic LOOCV analysis.}
-
- \item{\code{mars.data}}{the data from the MARS LOOCV analysis.}
 
  \item{\code{accuracy}}{A table with the percentage of estimates whose age ranges contain the actual age, the percentage of estimates within 1 year of the actual age, and within 2 years of the actual age.}
 }
@@ -72,7 +59,5 @@ MBex <- BAMSAUR.bff(MBsimple)
 MBex$quad.plot
 }
 \seealso{
-\code{\link[earth]{earth}}
-
 \code{\link[stats]{lm}}
 }

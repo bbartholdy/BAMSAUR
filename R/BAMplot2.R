@@ -6,16 +6,14 @@
 #'@param model Character. Choice of regression model. "linear", "quadratic", and "cubic" are supported.
 #'@param interval The type of age interval used. Can be either "prediction" or "confidence" intervals.
 #'@param level Determines the level of confidence or prediction intervals. A number between 0 and 1 (not inclusive).
-#'@param mars.int Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'TRUE'.
 #'@return A plot of the entered data.
 #'@import ggplot2
 #'@importFrom grDevices rgb
 #'@importFrom stats lm qt sd
 #Base plot
-BAM.plot2 <- function(x, y, model, interval, level, mars.int){
+BAM.plot2 <- function(x, y, model, interval, level){
   data <- as.data.frame(cbind(y, x))
   n <- as.numeric(length(y))
-  if(model == "linear" | model == "quadratic" | model == "cubic"){
    x2 <- x^2
   x3 <- x^3
   lin <- lm(y ~ x)
@@ -27,17 +25,6 @@ BAM.plot2 <- function(x, y, model, interval, level, mars.int){
   s.lin <- lin.out$sigma
   s.quad <- quad.out$sigma
   s.cub <- cub.out$sigma
-  if(mars.int == TRUE){
-    MARS <- earth(y ~ x, data, varmod.method = "earth", nfold = n - 1, ncross = 3)
-    pred.mars <- predict(MARS, type = "earth", interval = "pint", level = level)
-    Int <- (pred.mars[,3] - pred.mars[,2])/2
-    upp.int.lin <- lin$fitted.values + Int
-    low.int.lin <- lin$fitted.values - Int
-    upp.int.quad <- quad$fitted.values + Int
-    low.int.quad <- quad$fitted.values - Int
-    upp.int.cub <- cub$fitted.values + Int
-    low.int.cub <- cub$fitted.values - Int
-  }else{
 #Linear shaded region
   Int.lin <- Interval(x, x, interval = interval, level = level, df = lin$df.residual, s = lin.out$sigma)
   upp.int.lin <- lin$fitted.values + Int.lin
@@ -50,17 +37,7 @@ BAM.plot2 <- function(x, y, model, interval, level, mars.int){
   Int.cub <- Interval(x, x, interval = interval, level = level, df = quad$df.residual, s = quad.out$sigma)
   upp.int.cub <- cub$fitted.values + Int.cub
   low.int.cub <- cub$fitted.values - Int.cub
-  }
- }else if(model == "mars"){
-   interval <- "pint"
-   mars <- earth(y ~ x, data, varmod.method = "earth", nfold = n-1, ncross = 3)
-   mars.fit <- mars$fitted.values
-   int <- predict(mars, type = "earth", interval = interval, level = level)
-   Int.mars <- (int$upr - int$lwr)/2
-#Mars shaded region
-   upp.int.mars <- mars.fit + Int.mars
-   low.int.mars <- mars.fit - Int.mars
- }
+
 #Base plot
 pl <- ggplot(data) + geom_point(aes(x = x, y = y), size =1.5, colour = rgb(0,0.4,0.8)) +
   xlab("Wear score") + ylab ("Age (years)") +
@@ -84,11 +61,6 @@ if(model == "linear"){
     geom_ribbon(data = data, aes(x = x, ymin = low.int.cub, ymax=upp.int.cub), alpha=0.1, inherit.aes=F, fill="112233") +
     geom_line(data = data, aes(x = x, y = cub$fitted.values), colour = "#555555", size = 1)
   return(cub.plot)
-} else if(model == "mars"){
-  mars.plot <- pl +
-    geom_ribbon(data = data, aes(x = x, ymin = low.int.mars, ymax=upp.int.mars), alpha=0.1, inherit.aes=F, fill="112233") +
-    geom_line(data = data, aes(x = x, y = mars.fit), colour = "#555555", size = 1)
-  return(mars.plot)
 
 }
 }

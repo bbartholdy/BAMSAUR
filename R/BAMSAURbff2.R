@@ -4,37 +4,20 @@
 #' @param data Data frame, or object that can be coerced into a data frame, containing the ages and wear scores of individuals from a sample.
 #' @param interval Character. The type of age interval used. Can be either "prediction" or "confidence" intervals.
 #' @param level Numeric. Determines the level of confidence or prediction intervals. A number between 0 and 1 (not inclusive).
-#' @param varmod.method Character. Method for creating the variance model in the 'earth' function. See 'earth' package for more details.
-#' @param nfold Numeric. The number of folds to be used in the cross validation.
-#' @param ncross Numeric. Number of cross validations. Default is set at 3 to reduce computation time.
-
 #' @details BAMSAUR.bff uses the "lm" function for the regression analyses. It automatically provides the accuracy of the sample being evaluated, based on whether the actual age of an individual falls within the estimated age range from linear and quadratic regression analyses (using the described LOOCV method).
 #' It also provides the mean of the estimated age ranges, as an indicator of method precision, as well as the sum of squares of the residuals, and the r-squared value, for both the linear and quadratic regressions.
 #'
 #' @note If the slope of the regression is significantly different (2 standard deviations) from 0 or 1, a warning message will appear.
 #' @import AICcmodavg ggplot2 ggfortify
-#' @importFrom earth earth
 #' @importFrom grDevices rgb
 #' @importFrom stats lm na.omit AIC BIC rstandard
 #' @importFrom graphics plot
 #Function specifically for the BAMSAUR app
-BAMSAUR.bff2 <- function(data, interval = "prediction", level = 0.68, varmod.method = "earth", nfold = n-1, ncross = 3) {
+BAMSAUR.bff2 <- function(data, interval = "prediction", level = 0.68) {
   data <- na.omit(data)
   age.data <- as.numeric(data[,1])
   wear.data <- as.numeric(data[,2])
   n <- as.numeric(length(age.data))
-#MARS
-  MARS <- earth(age.data ~ wear.data, data, varmod.method = varmod.method, nfold = nfold, ncross = ncross)
-  pred.mars <- predict(MARS, wear.data, type = "earth", interval = "pint", level = level)
-  pred.mars <- cbind(age.data, pred.mars$fit, (pred.mars$upr - pred.mars$lwr)/2, pred.mars$lwr, pred.mars$upr)
-  colnames <- c("age", "estimate", "+- years", "lower", "upper")
-  out.mars <- summary(MARS)
-  mars.plot <- BAM.plot(MARS, data, interval, level)
-  mars.rsq <- round(MARS$rsq,2)
-  mars.gcv <- round(MARS$gcv,2)
-  int.mars <- round(pred.mars[,3], 2)
-  mars.prec <- mean(int.mars)
-  #mars.eval <- plot(MARS)
 #cubic regression
   wear2.data <- wear.data^2
   wear3.data <- wear.data^3
@@ -122,8 +105,6 @@ BAMSAUR.bff2 <- function(data, interval = "prediction", level = 0.68, varmod.met
  CV.cub <- BAMcv.lm(cub, interval = interval, level = level)
  CV.quad <- BAMcv.lm(quad, interval = interval, level = level)
  CV.lin <- BAMcv.lm(lin, interval = interval, level = level)
- CV.mars <- BAMcv.mars(MARS, data = data, level = level)
- mars.PRESS <- sum(CV.mars$out$difference^2)
 
 #Age intervals
  pred.cub <- suppressWarnings(predict(cub, interval = interval, level = level))
@@ -180,17 +161,10 @@ cat("BIC:"); cat("\t"); cat("\t"); cat(cub.bic); cat("\n")
 cat("Accuracy:"); cat("\t"); cat(round(CV.cub$accuracy, digits = 2)); cat("%"); cat("\n")
 cat("Average range:"); cat("\t"); cat("+-"); cat(" "); cat(round(mean(Int.cub), digits = 2)); cat(" "); cat("years"); cat("\n")
 cat("\t"); cat("(min, max: "); cat(min(Int.cub));cat(", "); cat(max(Int.cub)); cat(")"); cat("\n")
-cat("\n"); cat("MARS"); cat("\n")
-cat("R-squared:"); cat("\t"); cat(mars.rsq); cat("\n")
-cat("PRESS:"); cat("\t"); cat("\t"); cat(mars.PRESS); cat("\n")
-cat("GCV:"); cat("\t"); cat("\t"); cat(mars.gcv); cat("\n")
-cat("Accuracy:"); cat("\t"); cat(round(CV.mars$accuracy, digits = 2)); cat("%"); cat("\n")
-cat("Average range"); cat("\t"); cat("+-"); cat(" "); cat(mars.prec); cat(" "); cat("years"); cat("\n")
-cat("\t"); cat("(min, max: "); cat(min(int.mars));cat(", "); cat(max(int.mars)); cat(")"); cat("\n")
 
-  invisible(list("lin.plot" = lin.plot, "quad.plot" =  quad.plot, "cub.plot" = cub.plot, "mars.plot" = mars.plot, "linplot.eval" = lin.eval, "quadplot.eval" = quad.eval, "cubplot.eval" = cub.eval,
-                 "linear" = out.lin, "quadratic" = out.quad, "cubic" = out.cub, "mars" = out.mars, "mars.model" = MARS,
-                 "linAIC" = lin.aic, "quadAIC" = quad.aic, "cubAIC" = cub.aic, "linBIC" = lin.bic, "quadBIC" = quad.bic, "cubBIC" = cub.bic, "linPRESS" = lin.PRESS, "quadPRESS" = quad.SSres, "cubPRESS" = cub.PRESS, "marsPRESS" = mars.PRESS,
-                 "lin.data" = CV.lin$out, "quad.data" = CV.quad$out, "cub.data" = CV.cub$out, "mars.data" = CV.mars$out,
-                 "acc.lin" = CV.lin$accuracy, "acc.lin.1" = CV.lin$accuracy.1, "acc.lin.2" = CV.lin$accuracy.2, "acc.quad" = CV.quad$accuracy, "acc.quad.1" = CV.quad$accuracy.1, "acc.quad.2" = CV.quad$accuracy.2, "acc.cub" = CV.cub$accuracy, "acc.cub.1" = CV.cub$accuracy.1, "acc.cub.2" = CV.cub$accuracy.2, "acc.mars" = CV.mars$accuracy, "acc.mars.1" = CV.mars$accuracy.1, "acc.mars.2" = CV.mars$accuracy.2))
+  invisible(list("lin.plot" = lin.plot, "quad.plot" =  quad.plot, "cub.plot" = cub.plot, "linplot.eval" = lin.eval, "quadplot.eval" = quad.eval, "cubplot.eval" = cub.eval,
+                 "linear" = out.lin, "quadratic" = out.quad, "cubic" = out.cub,
+                 "linAIC" = lin.aic, "quadAIC" = quad.aic, "cubAIC" = cub.aic, "linBIC" = lin.bic, "quadBIC" = quad.bic, "cubBIC" = cub.bic, "linPRESS" = lin.PRESS, "quadPRESS" = quad.SSres, "cubPRESS" = cub.PRESS,
+                 "lin.data" = CV.lin$out, "quad.data" = CV.quad$out, "cub.data" = CV.cub$out,
+                 "acc.lin" = CV.lin$accuracy, "acc.lin.1" = CV.lin$accuracy.1, "acc.lin.2" = CV.lin$accuracy.2, "acc.quad" = CV.quad$accuracy, "acc.quad.1" = CV.quad$accuracy.1, "acc.quad.2" = CV.quad$accuracy.2, "acc.cub" = CV.cub$accuracy, "acc.cub.1" = CV.cub$accuracy.1, "acc.cub.2" = CV.cub$accuracy.2))
 }

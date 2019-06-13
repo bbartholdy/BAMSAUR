@@ -12,7 +12,7 @@
 
 BAM.plot <- function(object, data, interval = interval, level = level){
 
-if(class(object) == "lm"){
+
   rank <- object$rank
   data <- object$model[,1:rank]
   out <- summary(object)
@@ -26,14 +26,6 @@ if(class(object) == "lm"){
   Int <- (pred[,3] - pred[,2]) / 2
   #Int <- Interval(x, x, interval = interval, level = level, df = df, s = s)
 
-}else if(class(object) == "earth"){
-interval <- "pint"
-fit <- object$fitted.values
- y <- data[,1]
- x <- data[,2]
- pred <- predict(object, type = "earth", interval = interval, level = level)
- Int <- (pred[,3] - pred[,2])/2
-  }
 #Base plot
   pl <- ggplot(data) + geom_point(aes(x = x, y = y), size =1.5, colour = rgb(0,0.4,0.8)) +
     xlab("Wear score") + ylab ("Age (years)") +

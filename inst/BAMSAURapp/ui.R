@@ -40,20 +40,20 @@ ui <- fluidPage(
                             tags$hr()
                             ),
                             numericInput("wear1", label = "Insert wear score", value = 0, min = 0),
-                            radioButtons("model1", label = "Select model", choices = c("linear", "quadratic", "cubic", "mars"), selected = "quadratic"),
+                            radioButtons("model1", label = "Select model", choices = c("linear", "quadratic", "cubic"), selected = "quadratic"),
                             radioButtons("interval1", label = "Select age interval type", choices = c("prediction", "confidence")),
-                            checkboxInput("mars.int1", label = "MARS intervals", value = FALSE),
+                            #checkboxInput("mars.int1", label = "MARS intervals", value = FALSE),
                             sliderInput("level1", label = "Select age interval level(%)", min = 1, max = 100, value = 68, step = 1),
-                            conditionalPanel(
-                              condition = "input.model1 == 'mars'",
-                              checkboxInput("addopt", "Additional options"),
-                              conditionalPanel(
-                                condition = "input.addopt == true",
-                                radioButtons("varmod.method1", label = "Variance method", choices = c("const","lm","rlm","earth","power"), selected = "earth"),
-                                sliderInput("nfold1", label = "Number of folds", min = 3, max = 100, value = 49, step = 1),
-                                sliderInput("ncross1", label =  "Number of cross validations", min = 3, max = 100, value = 3, step = 1)
-                              )
-                            ),
+                            #conditionalPanel(
+                              #condition = "input.model1 == 'mars'",
+                              #checkboxInput("addopt", "Additional options"),
+                              #conditionalPanel(
+                                #condition = "input.addopt == true",
+                                #radioButtons("varmod.method1", label = "Variance method", choices = c("const","lm","rlm","earth","power"), selected = "earth"),
+                                #sliderInput("nfold1", label = "Number of folds", min = 3, max = 100, value = 49, step = 1),
+                                #sliderInput("ncross1", label =  "Number of cross validations", min = 3, max = 100, value = 3, step = 1)
+                              #)
+                            #),
                             conditionalPanel(
                               condition = "input.pop1 == 'MB11'",
                               checkboxInput("addplot", "Show plot")
@@ -111,15 +111,15 @@ ui <- fluidPage(
           helpText("Settings for LOOCV"),
           radioButtons(inputId = "interval3", label = "Select age interval type", choices = c("prediction", "confidence")),
           sliderInput(inputId = "level3", label = "Select age interval level(%)", min = 1, max = 100, value = 68, step = 1),
-          helpText("Additional options for the evaluation of a MARS model"),
-          checkboxInput("addopt3", "Additional options"),
-          conditionalPanel(
-            condition = "input.addopt3 == true",
-            radioButtons("varmod.method3", label = "Variance method", choices = c("const","lm","rlm","earth","power"), selected = "earth"),
-            sliderInput("nfold3", label = "Number of folds", min = 3, max = 100, value = 49, step = 1),
-            helpText("Warning: increasing the ncross will increase the computation time"),
-            sliderInput("ncross3", label =  "Number of cross validations", min = 3, max = 100, value = 3, step = 1)
-            ),
+          #helpText("Additional options for the evaluation of a MARS model"),
+          #checkboxInput("addopt3", "Additional options"),
+          #conditionalPanel(
+            #condition = "input.addopt3 == true",
+            #radioButtons("varmod.method3", label = "Variance method", choices = c("const","lm","rlm","earth","power"), selected = "earth"),
+            #sliderInput("nfold3", label = "Number of folds", min = 3, max = 100, value = 49, step = 1),
+            #helpText("Warning: increasing the ncross will increase the computation time"),
+            #sliderInput("ncross3", label =  "Number of cross validations", min = 3, max = 100, value = 3, step = 1)
+            #),
             actionButton("eval3", "Evaluate")
           ),
         mainPanel(
@@ -153,11 +153,11 @@ ui <- fluidPage(
                     dataTableOutput("cubTable3"),
                     downloadButton("evalCub", "Download table (.csv)")
            ),
-           tabPanel("MARS results",
-                    verbatimTextOutput("out3.mars"),
-                    dataTableOutput("marsTable3"),
-                    downloadButton("evalMars", "Download table (.csv)")
-           ),
+           #tabPanel("MARS results",
+            #        verbatimTextOutput("out3.mars"),
+             #       dataTableOutput("marsTable3"),
+              #      downloadButton("evalMars", "Download table (.csv)")
+           #),
            tabPanel("Linear plots",
               plotOutput("lin3"),
               plotOutput("lineval3")
@@ -169,19 +169,19 @@ ui <- fluidPage(
            tabPanel("Cubic plots",
                     plotOutput("cub3"),
                     plotOutput("cubeval3")
-           ),
-           tabPanel("MARS plots",
-                    plotOutput("mars3"),
-                    "MARS diagnostic plots can only be obtained in the R-console.
-                    Use the following code:",
-                    tags$br(),
-                    "eval <- BAMSAUR.bff(data)",
-                    tags$br(),
-                    "mars <- eval$mars",
-                    tags$br(),
-                    "plot(mars)",
-                    plotOutput("marseval3")
            )
+           #tabPanel("MARS plots",
+            #        plotOutput("mars3"),
+             #       "MARS diagnostic plots can only be obtained in the R-console.
+              #      Use the following code:",
+               #     tags$br(),
+                #    "eval <- BAMSAUR.bff(data)",
+                #    tags$br(),
+                 #   "mars <- eval$mars",
+                  #  tags$br(),
+                   # "plot(mars)",
+                    #plotOutput("marseval3")
+           #)
 
         )
       )
