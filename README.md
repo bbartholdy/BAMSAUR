@@ -4,7 +4,7 @@ This package provides functions for the age-at-death estimation of nonadult huma
 Users who are not familiar with the R-environment can also take advantage of a user-friendly graphical user interface (GUI).
 
 # Installation
-1. To install BAMSAUR, R must first be installed (https://cran.r-project.org/).
+1. To install BAMSAUR, R (>= 3.6.0) must first be installed (https://cran.r-project.org/).
 ```r
 #2. Open R, and install the package "devtools" by entering the following into the R-console:
 install.packages("devtools")
