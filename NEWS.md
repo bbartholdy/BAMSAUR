@@ -1,6 +1,10 @@
 # NEWS
 
 Updates to the BAMSAUR package
+## BAMSAUR_0.0.0.9002
+### 13-06-2018
+
+* Due to compatibility issues with the upgrade to R version 3.6.0, the use of multivariate adaptive regression splines (MARS) will be temporarily unavailable.
 
 ## BAMSAUR_0.0.0.9001
 ### 11-04-2019
