@@ -31,7 +31,7 @@ BAMcv.lm <- function(object, interval = "prediction", level = 0.68){
   #LOOCV
   res <- rstandard(object, type = "predictive")
   est <- age.data - res
-  age.diff <- res
+  age.diff <- abs(res)
   pred <- suppressWarnings(predict(object, interval = interval, level = level))
   int <- (pred[,3] - pred[,2])/2
   low <- pred[,2]

@@ -57,7 +57,7 @@ BAMcv.mars <- function(object, data, type = "earth", level = 0.68, ...){
     cv.data[k,4] <- upp.Int
   }
 
-  age.diff <- cv.data[,2] - age
+  age.diff <- abs(cv.data[,2] - age)
   cv.out <- cbind(cv.data$age, cv.data$age.est, age.diff, cv.data$low.Int, cv.data$upp.Int)
   cv.out <- as.data.frame(cv.out)
   colnames(cv.out) <- c("age", "est", "diff", "low", "upp")
