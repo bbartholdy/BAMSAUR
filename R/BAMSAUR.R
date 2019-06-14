@@ -51,6 +51,15 @@ BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", interval = "predi
   model <- lm(Age ~ poly(Wear, rank, raw = T), data = data, ...)
   pred <- predict(model, newdata = wear, interval = interval, level = level)
   age.est <- round(pred[,1], 2)
+
+  #classical calibration model
+#if(class.cal == TRUE){
+ # model <- lm(Wear ~ Age, data)
+  #intercept <- model$coefficients[[1]]
+  #a <- model$coefficients[[2]]
+  #age.est <- (wear - intercept)/a
+#}
+
 if(mars.int == TRUE){
   MARS <- earth(Age ~ Wear, data, varmod.method = "earth", nfold = n - 1, ncross = 3)
   pred.mars <- predict(MARS, newdata = wear, type = "earth", interval = "pint", level = level)
