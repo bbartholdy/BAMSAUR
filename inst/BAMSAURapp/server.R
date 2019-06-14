@@ -24,7 +24,7 @@ BAMSAUR.1 <-  eventReactive(input$calc1, {
   output$range1 <- renderText({result1 <- BAMSAUR.1()
   paste(result1$lower, " - ", result1$upper, " years")
   })
-  BAMplot.1 <- eventReactive(input$calc1, {BAMSAUR:::BAM.plot2(x = MBsimple$Wear, y = MBsimple$Age, model = input$model1, interval = input$interval1, level = input$level1/100, mars.int = input$mars.int1)})
+  BAMplot.1 <- eventReactive(input$calc1, {BAMSAUR:::BAM.plot2(x = BAMSAUR::MBsimple$Wear, y = BAMSAUR::MBsimple$Age, model = input$model1, interval = input$interval1, level = input$level1/100, mars.int = input$mars.int1)})
   output$plot <- renderPlot({result1 <- BAMSAUR.1()
   plot <- BAMplot.1()
   plot + ggplot2::geom_point(ggplot2::aes(x = input$wear1, y = result1$estimate), data = NULL, size = 2.5, colour = rgb(0.8,0.1,0))
