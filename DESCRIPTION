@@ -9,7 +9,6 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
 Imports: AICcmodavg,
-    earth (>= 5.1.0),
     ggfortify (>= 0.4.5),
     ggplot2,
     shiny (>= 1.2.0)
