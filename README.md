@@ -4,7 +4,7 @@ This package provides functions for the age-at-death estimation of nonadult huma
 Users who are not familiar with the R-environment can also take advantage of a user-friendly graphical user interface (GUI).
 
 # Installation
-1. To install BAMSAUR, R must first be installed (https://cran.r-project.org/).
+1. To install BAMSAUR, R (>= 3.6.0) must first be installed (https://cran.r-project.org/).
 ```r
 #2. Open R, and install the package "devtools" by entering the following into the R-console:
 install.packages("devtools")
@@ -87,7 +87,7 @@ MBdata contains all the wear scores for the individual teeth of each specimen th
 
 # References
 
-Bartholdy, B.P., Hoogland, M.L.P, and Waters-Rist, A., under review. How Old Are You Now? A new ageing method for nonadults based on dental wear. International Journal of Osteoarchaeology.
+Bartholdy, B.P., Hoogland, M.L.P, and Waters-Rist, A., under review. How Old Are You Now? A new ageing method for nonadults based on dental wear. International Journal of Osteoarchaeology. doi: 10.1002/oa.2758.
 
 Hadley Wickham, Jim Hester and Winston Chang (2018). devtools: Tools to Make Developing R Packages Easier. R package version 1.13.6. https://CRAN.R-project.org/package=devtools
 

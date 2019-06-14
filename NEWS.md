@@ -1,6 +1,10 @@
 # NEWS
 
 Updates to the BAMSAUR package
+## BAMSAUR_0.0.0.9002
+### 13-06-2019
+
+* Compatibility issues fixed
 
 ## BAMSAUR_0.0.0.9001
 ### 11-04-2019
