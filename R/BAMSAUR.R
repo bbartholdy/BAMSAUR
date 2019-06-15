@@ -51,7 +51,7 @@ BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", class.cal = F, in
   pred <- predict(model, newdata = wear, interval = interval, level = level)
   age.est <- round(pred[,1], 2)
 
-
+#Create prediction intervals based on a MARS model of the data
 if(mars.int == TRUE){
   MARS <- earth(Age ~ Wear, data, varmod.method = "earth", nfold = n - 1, ncross = 3)
   pred.mars <- predict(MARS, newdata = wear, type = "earth", interval = "pint", level = level)
