@@ -7,6 +7,7 @@
 #' @param pop Character. Indicates which reference population to use. "MB11" and "other" are supported. When "other" is selected, the data input is required.
 #' @param interval Character. The type of age interval used. Can be either "prediction" or "confidence" intervals. The default is set at "prediction".
 #' @param level Numeric. Determines the level of confidence or prediction intervals. Is a number between 0 and 1 (not inclusive). 0.68, 0.90, or 0.95 is recommended. The default is set at 0.68.
+#' @param mars.int Logical. Apply MARS-sized prediction intervals.
 #' @param ... Can be used to pass additional arguments to the lm function.
 #' @details This function uses the "lm" function for the regression analyses.
 #'
@@ -27,7 +28,7 @@
 #' @export BAMSAUR
 #' @keywords Age-at-death estimation
 
-BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", interval = "prediction", level = 0.68, ...){
+BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", class.cal = F, interval = "prediction", level = 0.68, mars.int = F, ...){
 
   wear <- as.data.frame(wear)
   colnames(wear) <- "Wear"
@@ -50,13 +51,6 @@ BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", interval = "predi
   pred <- predict(model, newdata = wear, interval = interval, level = level)
   age.est <- round(pred[,1], 2)
 
-  #classical calibration model
-#if(class.cal == TRUE){
- # model <- lm(Wear ~ Age, data)
-  #intercept <- model$coefficients[[1]]
-  #a <- model$coefficients[[2]]
-  #age.est <- (wear - intercept)/a
-#}
 
 if(mars.int == TRUE){
   MARS <- earth(Age ~ Wear, data, varmod.method = "earth", nfold = n - 1, ncross = 3)
