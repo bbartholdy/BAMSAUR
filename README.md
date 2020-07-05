@@ -6,7 +6,9 @@ Users who are not familiar with the R-environment can also take advantage of a u
 https://websaur.shinyapps.io/bamsaurapp/
 
 # Installation
+
 1. To install BAMSAUR, R (>= 3.5.1) must first be installed (https://cran.r-project.org/).
+
 ```r
 #2. Open R, and install the package "devtools" by entering the following into the R-console:
 install.packages("devtools")
@@ -15,9 +17,11 @@ install.packages("devtools")
 devtools::install_github("bbartholdy/BAMSAUR")
 library(BAMSAUR)
 ```
+
 # Usage
 
 The BAMSAUR package uses the following R-packages:
+
 ```r
 c("AICcmodavg", "earth", "ggfortify", "ggplot2", "shiny")
 ```
