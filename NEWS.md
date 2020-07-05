@@ -1,5 +1,8 @@
 # NEWS
 
+### 05-07-2020
+Github Pages site created: https://bbartholdy.github.io/BAMSAUR/
+
 Updates to the BAMSAUR package
 ## BAMSAUR_0.0.0.9002
 ### 13-06-2019
