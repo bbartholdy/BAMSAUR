@@ -4,7 +4,7 @@
 \alias{BAMSAUR}
 \title{Age-at-death estimation}
 \usage{
-BAMSAUR(wear, data = NULL, rank = 2, pop = "MB11",
+BAMSAUR(wear, data = NULL, rank = 2, pop = "MB11", class.cal = F,
   interval = "prediction", level = 0.68, mars.int = F, ...)
 }
 \arguments{
@@ -20,7 +20,7 @@ BAMSAUR(wear, data = NULL, rank = 2, pop = "MB11",
 
 \item{level}{Numeric. Determines the level of confidence or prediction intervals. Is a number between 0 and 1 (not inclusive). 0.68, 0.90, or 0.95 is recommended. The default is set at 0.68.}
 
-\item{mars.int}{Logical. If 'TRUE', uses prediction intervals from the MARS model. Recommended if the data show some heteroscedasticity (but not enough to warrant a MARS model). Default set as 'FALSE'.}
+\item{mars.int}{Logical. Apply MARS-sized prediction intervals.}
 
 \item{...}{Can be used to pass additional arguments to the lm function.}
 }

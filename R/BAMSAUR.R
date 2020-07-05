@@ -28,7 +28,7 @@
 #' @export BAMSAUR
 #' @keywords Age-at-death estimation
 
-BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", class.cal = F, interval = "prediction", level = 0.68, mars.int = F, ...){
+BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", interval = "prediction", level = 0.68, mars.int = F, ...){
 
   wear <- as.data.frame(wear)
   colnames(wear) <- "Wear"

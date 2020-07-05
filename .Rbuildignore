@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+bam-notes.Rmd
+sepDent.R
+doc
