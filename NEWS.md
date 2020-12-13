@@ -1,18 +1,21 @@
 # NEWS
 
-Updates to the BAMSAUR package
-## BAMSAUR_0.0.0.9002
-### 13-06-2019
+### 05-07-2020
+Github Pages site created: https://bbartholdy.github.io/BAMSAUR/
+
+## Updates to the BAMSAUR package
+### BAMSAUR_0.0.0.9002
+#### 13-06-2019
 
 * Compatibility issues fixed
 
-## BAMSAUR_0.0.0.9001
-### 11-04-2019
+### BAMSAUR_0.0.0.9001
+#### 11-04-2019
 
 * Erroneous code corrected in the BAMcv.lm function, which was providing incorrect accuracy rates.
 
-## BAMSAUR_0.0.0.9000
-### 11-03-2019
+### BAMSAUR_0.0.0.9000
+#### 11-03-2019
 
 * Added option to apply MARS-sized prediction intervals to the simple regression models. This is recommeded when using the MB11 population, as the age range provided by the MARS model can better account for the error of the added undocumented-age individuals.
 
