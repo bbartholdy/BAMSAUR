@@ -4,12 +4,14 @@
 \name{MBsimple}
 \alias{MBsimple}
 \title{Simple dataset for Middenbeemster.}
-\format{Data frame with 50 rows and 2 variables.
+\format{
+Data frame with 50 rows and 2 variables.
 \describe{
  \item{Age}{Age-at-death for each individual}
 
  \item{Wear}{Average wear scores for each individual}
-}}
+}
+}
 \usage{
 MBsimple
 }

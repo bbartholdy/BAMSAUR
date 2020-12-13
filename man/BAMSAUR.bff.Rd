@@ -4,8 +4,15 @@
 \alias{BAMSAUR.bff}
 \title{Sample evaluation}
 \usage{
-BAMSAUR.bff(data, interval = "prediction", level = 0.68,
-  varmod.method = "earth", nfold = n - 1, ncross = 3, ...)
+BAMSAUR.bff(
+  data,
+  interval = "prediction",
+  level = 0.68,
+  varmod.method = "earth",
+  nfold = n - 1,
+  ncross = 3,
+  ...
+)
 }
 \arguments{
 \item{data}{Data frame containing one column for ages-at-death and a second column for the associated wear scores.}

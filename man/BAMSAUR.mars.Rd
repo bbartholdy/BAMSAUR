@@ -4,8 +4,16 @@
 \alias{BAMSAUR.mars}
 \title{Age-at-death estimation with MARS}
 \usage{
-BAMSAUR.mars(wear, data = NULL, pop = "MB11", level = 0.68,
-  varmod.method = "earth", nfold = n - 1, ncross = 3, ...)
+BAMSAUR.mars(
+  wear,
+  data = NULL,
+  pop = "MB11",
+  level = 0.68,
+  varmod.method = "earth",
+  nfold = n - 1,
+  ncross = 3,
+  ...
+)
 }
 \arguments{
 \item{wear}{Numeric. The wear score of an individual. Can be a single value or a vector containing a list of wear scores from multiple individuals.}

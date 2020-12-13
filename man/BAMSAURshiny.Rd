@@ -4,9 +4,18 @@
 \alias{BAMSAURshiny}
 \title{Age-at-death estimation}
 \usage{
-BAMSAURshiny(wear, data = NULL, model = "quadratic", pop = "MB11",
-  interval = "prediction", level = 0.68, varmod.method = "earth",
-  nfold = n - 1, ncross = 3, mars.int = T)
+BAMSAURshiny(
+  wear,
+  data = NULL,
+  model = "quadratic",
+  pop = "MB11",
+  interval = "prediction",
+  level = 0.68,
+  varmod.method = "earth",
+  nfold = n - 1,
+  ncross = 3,
+  mars.int = T
+)
 }
 \arguments{
 \item{wear}{Numeric. The wear score of an individual. Can be a single value or a vector containing a list of wear scores from multiple individuals.}

@@ -4,7 +4,8 @@
 \name{MBdata}
 \alias{MBdata}
 \title{Whole dataset for Middenbeemster.}
-\format{Data frame with 50 rows and 59 variables.
+\format{
+Data frame with 50 rows and 59 variables.
 \describe{
  \item{[,1] ID}{Individual identifier}
 
@@ -29,7 +30,8 @@
  \item{[,58] Max}{Average wear for maxillary teeth only}
 
  \item{[,59] Man}{Average wear for mandibular teeth only}
-}}
+}
+}
 \usage{
 MBdata
 }

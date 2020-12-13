@@ -4,8 +4,16 @@
 \alias{BAMSAUR}
 \title{Age-at-death estimation}
 \usage{
-BAMSAUR(wear, data = NULL, rank = 2, pop = "MB11", class.cal = F,
-  interval = "prediction", level = 0.68, mars.int = F, ...)
+BAMSAUR(
+  wear,
+  data = NULL,
+  rank = 2,
+  pop = "MB11",
+  interval = "prediction",
+  level = 0.68,
+  mars.int = F,
+  ...
+)
 }
 \arguments{
 \item{wear}{Numeric. The wear score of an individual. Can be a single value or a vector containing a list of wear scores from multiple individuals.}

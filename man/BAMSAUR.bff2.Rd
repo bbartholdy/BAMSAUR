@@ -4,8 +4,14 @@
 \alias{BAMSAUR.bff2}
 \title{Sample evaluation}
 \usage{
-BAMSAUR.bff2(data, interval = "prediction", level = 0.68,
-  varmod.method = "earth", nfold = n - 1, ncross = 3)
+BAMSAUR.bff2(
+  data,
+  interval = "prediction",
+  level = 0.68,
+  varmod.method = "earth",
+  nfold = n - 1,
+  ncross = 3
+)
 }
 \arguments{
 \item{data}{Data frame, or object that can be coerced into a data frame, containing the ages and wear scores of individuals from a sample.}
