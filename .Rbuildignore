@@ -2,5 +2,6 @@
 ^\.Rproj\.user$
 bam-notes.Rmd
 sepDent.R
-docs
+docs/
 BABAO2019_Rcode.txt
+misc/
