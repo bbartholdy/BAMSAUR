@@ -5,6 +5,8 @@ Users who are not familiar with the R-environment can also take advantage of a u
 
 https://websaur.shinyapps.io/bamsaurapp/
 
+TEST
+
 # Installation
 
 1. To install BAMSAUR, R (>= 3.5.1) must first be installed (https://cran.r-project.org/).
