@@ -1,6 +1,7 @@
 # BAMSAUR
 
 ![build](https://github.com/bbartholdy/BAMSAUR/workflows/R/badge.svg)
+[![build status](https://github.com/bbartholdy/BAMSAUR/workflows/R-CMD-check/badge.svg)](https://github.com/bbartholdy/BAMSAUR/actions)
 
 This package provides functions for the age-at-death estimation of nonadult human skeletal remains based on dental wear. The method was developed using a Dutch post-Medieval reference population; however, the package also allows the inclusion of other (more appropriate) reference samples. The main function allows the age-at-death estimation of nonadults based on a single wear score calculated from all available teeth, and additional functions allow the user to upload and evaluate their own reference sample, from which to base the age-at-death estimations.
 Users who are not familiar with the R-environment can also take advantage of a user-friendly graphical user interface (GUI).
