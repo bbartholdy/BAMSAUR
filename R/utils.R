@@ -50,6 +50,32 @@ plot_bamsaur <- function(object, ...){ # allow theme etc. to be passed through
   }
 }
 
+#' @export
+accusaur <- function(){
+  # function to generate accuracies for validataur
+  #Quantifying absolute accuracy, i.e. if the predicted range contains the actual known age
+  #The lower intervals are converted to integers in order to capture the appropriate accuracy (otherwise a prediction of 5.3 for a 5 year old would be classified as wrong)
+  is.true <- (cv.out$age > cv.out$low | cv.out$age == as.integer(cv.out$low)) & (cv.out$age < cv.out$upp | cv.out$age == cv.out$upp)
+  is.true <- as.numeric(is.true)
+  accuracy <- mean(is.true) * 100
+  #Quantifying relative accuracy, i.e. if the predicted age is within 1, 2, 5, and 10 years of the known age
+  is.true.1 <- (age.diff < 1 | age.diff == 1)
+  is.true.2 <- (age.diff < 2 | age.diff == 2)
+  is.true.5 <- (age.diff < 5 | age.diff == 5)
+  is.true.10 <- (age.diff < 10 | age.diff == 10)
+  is.true.1 <- as.numeric(is.true.1)
+  is.true.2 <- as.numeric(is.true.2)
+  is.true.5 <- as.numeric(is.true.5)
+  is.true.10 <- as.numeric(is.true.10)
+  accuracy.1 <- mean(is.true.1) * 100
+  accuracy.2 <- mean(is.true.2) * 100
+  accuracy.5 <- mean(is.true.5) * 100
+  accuracy.10 <- mean(is.true.10) * 100
+  colnames(cv.out) <- c("Age", "Estimate", "Difference", "Lower", "Upper")
+  list("out" = cv.out, "accuracy" = accuracy, "accuracy.1" = accuracy.1, "accuracy.2" = accuracy.2, "accuracy.5" = accuracy.5, "accuracy.10" = accuracy.10)
+
+}
+
 # build model for name()
 
 # models <- for(i in 1:3){
