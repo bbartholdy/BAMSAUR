@@ -22,7 +22,7 @@
 
 bamsaur <- function(wear, ref_pop = NULL, degree = 2, interval = "prediction",
                     level = 0.68, ...){
-list(...)
+
 if(!is.numeric(wear)){
   stop("'wear' is not numeric")
 }
