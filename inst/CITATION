@@ -1,0 +1,18 @@
+bibentry("Manual",
+         title = "How Old Are You Now? A new ageing method for nonadults based on dental wear",
+         author = c(person("Bjørn Peare, Bartholdy"),
+                    person("Menno L.P., Hoogland"),
+                    person("Andrea, Waters-Rist")),
+         year         = {2019},
+         journal      = {"International Journal of Osteoarchaeology"},
+         doi          = {"10.1002/oa.2758."},
+
+         textVersion =
+         paste("Bartholdy, B.P., Hoogland, M.L.P., & Waters-Rist, A. (", 2019, "). ",
+               "How Old Are You Now? A new ageing method for nonadults based on dental wear. ",
+               "International Journal of Osteoarchaeology. doi: 10.1002/oa.2758",
+               sep=""),
+
+         mheader = "To cite BAMSAUR in publications use:",
+
+	)
