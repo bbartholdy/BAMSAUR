@@ -7,6 +7,11 @@ Users who are not familiar with the R-environment can also take advantage of a u
 
 https://websaur.shinyapps.io/bamsaurapp/
 
+This was the first package I developed and it shows! I am currently doing a complete overhaul but it will take some time. The old functions will of course still be available (if anyone is actually using them). To install the development version use:
+```r
+devtools::install_github("bbartholdy/BAMSAUR", ref = "dev")
+```
+
 # Installation
 
 1. To install BAMSAUR, R (>= 3.5.1) must first be installed (https://cran.r-project.org/).
