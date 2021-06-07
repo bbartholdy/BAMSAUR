@@ -13,7 +13,8 @@ Users who are not familiar with the R-environment can also take advantage of a u
 
 # Installation
 1. To install BAMSAUR, R (>= 3.6.0) must first be installed (https://cran.r-project.org/).
-```r
+
+```{r eval=FALSE}
 #2. Open R, and install the package "devtools" by entering the following into the R-console:
 install.packages("devtools")
 
@@ -44,19 +45,19 @@ The BAMSAUR.mars function serves the same purpose as the BAMSAUR function, but u
 
 Examples:
 
-```r
-#The following example calculates the ages-at-death with MARS 68%PIs of 10 random wear scores
-wear <- runif(10,0,16)
-BAMSAUR(wear)
+```{r}
+wear <- runif(10,0,14)
+bamsaur(wear)
 #Ages-at-death using a linear model and 95%CIs
-BAMSAUR(wear, rank = 1, interval = "confidence", level = 0.95, mars.int = F)
+bamsaur(wear, degree = 1, interval = "confidence", level = 0.95)
 
 #Age-at-death calculation using MARS
 wear <- runif(10,0,16)
 BAMSAUR.mars(wear)
+
 #Age-at-death calculation using 90%PIs and a custom dataset
-data <- MBsimple[1:25]
-BAMSAUR.mars(wear, data = data, pop = "other", level = 0.9)
+random_sample <- MBsimple[sample(1:nrow(MBsimple), size = 25, replace = F),]
+bamsaur(wear, ref_pop = random_sample, level = 0.9)
 ```
 
 ## BAMSAUR best-fit function

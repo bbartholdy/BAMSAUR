@@ -41,7 +41,6 @@ if(level >= 1){
 }
 
 wear_input <- data.frame("wear" = wear)
-#colnames(wear_input) <- NULL
 colnames(ref_pop) <- c("age", "wear")
 model <- lm(formula = age ~ poly(wear, degree, raw = T),
             data = ref_pop, ...)
@@ -60,7 +59,6 @@ wear_datf$lower <- age_estimate[,2]
 wear_datf$upper <- age_estimate[,3]
 bam_out <- list("estimate" = wear_datf, "model" = model, "model_frame" = mf,
                 "ref_pop" = ref_pop)
-class(bam_out) <- "bamsaur"
 
 max_ref <- max(ref_pop$age)
 range_ref <- paste(range(ref_pop$age), collapse = "-")
@@ -70,5 +68,6 @@ if(max_ref < max_estimate){
           reference population (", range_ref,
           ") resulting in extrapolation of some estimated ages."))
 }
-bam_out
+class(bam_out) <- c("bamsaur", class(bam_out))
+return(bam_out)
 }
