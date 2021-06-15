@@ -44,6 +44,7 @@ lm_models <- lapply(lm_formula, lm, data = data)
 names(lm_models) <- c("lin", "quad", "cub")
 n <- length(lm_models$lin$residuals)
 ref_pop <- lm_models$lin$model
+colnames(ref_pop) <- c(model_terms[1], model_terms[2])
 #lm_models$lin$call$data <- noquote("input_data")
 #n <- length(lin_model$residuals)
 pred_lm <- lapply(lm_models, predict, interval = interval, level = level)
@@ -89,7 +90,7 @@ if(nfold == n - 1){
 
   acc_models <- pred_lm
   acc_models$mars <- pred_mars
-  acc <- lapply(acc_models, accusaur, age = input_data[,1])
+  acc <- lapply(acc_models, accusaur, age = input_data[model_terms[1]])
 
   out <- list()
   out$lin <- do.call(rbind, acc$lin[2])

@@ -20,13 +20,13 @@ BAMcv.mars(object, data, type = "earth", level = 0.68, ...)
 \value{
 Returns a list containing the following:
 \describe{
- \item{\code{out}}{the data from the LOOCV, including known age, estimated age, difference between estimated and known ages, and the lower and upper age range.}
+\item{\code{out}}{the data from the LOOCV, including known age, estimated age, difference between estimated and known ages, and the lower and upper age range.}
 
- \item{\code{accuracy}}{The percentage of estimates whose range contains the known age.}
+\item{\code{accuracy}}{The percentage of estimates whose range contains the known age.}
 
- \item{\code{accuracy.1}}{The percentage of estimates falling within one year of the known age.}
+\item{\code{accuracy.1}}{The percentage of estimates falling within one year of the known age.}
 
- \item{\code{accuracy.2}}{The percentage of estimates falling within two years of the known age.}
+\item{\code{accuracy.2}}{The percentage of estimates falling within two years of the known age.}
 }
 }
 \description{

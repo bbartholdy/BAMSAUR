@@ -35,31 +35,31 @@ the R-squared value, AIC(c), and BIC.
 It also includes a list containing the following items:
 
 \describe{
- \item{\code{lin.plot}}{a plot of the linear regression with prediction/confidence intervals}
+\item{\code{lin.plot}}{a plot of the linear regression with prediction/confidence intervals}
 
- \item{\code{quad.plot}}{a plot of the quadratic regression with prediction/confidence intervals}
+\item{\code{quad.plot}}{a plot of the quadratic regression with prediction/confidence intervals}
 
- \item{\code{cub.plot}}{a plot of the cubic regression with prediction/confidence intervals}
+\item{\code{cub.plot}}{a plot of the cubic regression with prediction/confidence intervals}
 
- \item{\code{mars.plot}}{a plot of the MARS with prediction/confidence intervals}
+\item{\code{mars.plot}}{a plot of the MARS with prediction/confidence intervals}
 
- \item{\code{linear}}{class 'lm' object from the linear regression analysis.}
+\item{\code{linear}}{class 'lm' object from the linear regression analysis.}
 
- \item{\code{quadratic}}{class 'lm' object from the quadratic regression analysis.}
+\item{\code{quadratic}}{class 'lm' object from the quadratic regression analysis.}
 
- \item{\code{cubic}}{class 'lm' object from the cubic regression analysis.}
+\item{\code{cubic}}{class 'lm' object from the cubic regression analysis.}
 
- \item{\code{mars}}{class 'earth' object from the MARS analysis.}
+\item{\code{mars}}{class 'earth' object from the MARS analysis.}
 
- \item{\code{lin.data}}{the data from the linear LOOCV analysis.}
+\item{\code{lin.data}}{the data from the linear LOOCV analysis.}
 
- \item{\code{quad.data}}{the data from the quadratic LOOCV analysis.}
+\item{\code{quad.data}}{the data from the quadratic LOOCV analysis.}
 
- \item{\code{cub.data}}{the data from the quadratic LOOCV analysis.}
+\item{\code{cub.data}}{the data from the quadratic LOOCV analysis.}
 
- \item{\code{mars.data}}{the data from the MARS LOOCV analysis.}
+\item{\code{mars.data}}{the data from the MARS LOOCV analysis.}
 
- \item{\code{accuracy}}{A table with the percentage of estimates whose age ranges contain the actual age, the percentage of estimates within 1 year of the actual age, and within 2 years of the actual age.}
+\item{\code{accuracy}}{A table with the percentage of estimates whose age ranges contain the actual age, the percentage of estimates within 1 year of the actual age, and within 2 years of the actual age.}
 }
 }
 \description{

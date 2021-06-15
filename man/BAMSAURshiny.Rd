@@ -41,15 +41,15 @@ BAMSAURshiny(
 \value{
 a data frame containing the following values:
 \describe{
- \item{\code{wear}}{The wear score(s) initially applied to the function}
+\item{\code{wear}}{The wear score(s) initially applied to the function}
 
- \item{\code{estimate}}{Age-at-death estimate(s) calculated from the wear score(s)}
+\item{\code{estimate}}{Age-at-death estimate(s) calculated from the wear score(s)}
 
- \item{\code{range}}{the age range (+- years) of the estimate, determined by the type and level.}
+\item{\code{range}}{the age range (+- years) of the estimate, determined by the type and level.}
 
- \item{\code{lower}}{the lower bound of the age interval.}
+\item{\code{lower}}{the lower bound of the age interval.}
 
- \item{\code{upper}}{the upper bound of the age interval.}
+\item{\code{upper}}{the upper bound of the age interval.}
 }
 }
 \description{
