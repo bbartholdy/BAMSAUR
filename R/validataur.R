@@ -3,12 +3,6 @@
 #'
 #' @export
 
-# BAMSAUR.bff
-
-# New name:
-  # bam_validate
-  # validsaur
-  # validataur
 # Allow multiple regression?
 
 # Output includes: bam object from the reference used for validation, that can be used
@@ -115,6 +109,6 @@ if(nfold == n - 1){
 # output should include a data frame that can be used in bamsaur() (like MBsimple)
   #list(acc, cbind(pred_mars, input_data[,1]))
   # estimate and actual age
-  validataur_out
+  return(validataur_out)
 }
 

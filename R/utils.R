@@ -81,7 +81,7 @@ accusaur <- function(x, age){
   accusaur_out <- data.frame(x, age.diff)
   colnames(accusaur_out) <- c("estimate", "lwr", "upr", "difference")
   #list("out" = accusaur_out, "accuracy" = accuracy, "accuracy.1" = accuracy1, "accuracy.2" = accuracy2, "accuracy.5" = accuracy5, "accuracy.10" = accuracy10)
-  list("out" = accusaur_out, "acc" = acc)
+  return(list("out" = accusaur_out, "acc" = acc))
 }
 
 # build model for name()
