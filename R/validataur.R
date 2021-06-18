@@ -90,7 +90,7 @@ if(nfold == n - 1){
 
   acc_models <- pred_lm
   acc_models$mars <- pred_mars
-  acc <- lapply(acc_models, accusaur, age = input_data[model_terms[1]])
+  acc <- lapply(acc_models, accusaur, y = input_data[model_terms[1]])
 
   out <- list()
   out$lin <- do.call(rbind, acc$lin[2])

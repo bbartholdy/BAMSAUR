@@ -50,35 +50,27 @@ plot_bamsaur <- function(object, ...){ # allow theme etc. to be passed through
 }
 
 # Calculating the accuracy of age estimates
-accusaur <- function(x, age){
-  x <- as.data.frame(x)
-  age.diff <- x$fit - age
+accusaur <- function(pred_obj, y){
+  x <- as.data.frame(pred_obj)
+  diff <- x$fit - y
 
   # Quantifying absolute accuracy, i.e. if the predicted range contains the actual known age
   # The lower intervals are converted to integers in order to capture the appropriate accuracy
     # (otherwise a prediction of 5.3 for a 5 year old would be classified as wrong)
-  test_acc <- (age > as.integer(x$lwr) | age == x$lwr) &
-    (age < x$upr | age == x$upr)
+  test_acc <- (y > as.integer(x$lwr) | y == x$lwr) &
+    (y < x$upr | y == x$upr)
   test_acc <- as.numeric(test_acc)
   accuracy <- mean(test_acc) * 100
 
   # Quantifying relative accuracy, i.e. if the predicted age is within 1, 2, 5, and 10 years of the known age
-  test_acc1 <- (age.diff < 1 | age.diff == 1)
-  test_acc2 <- (age.diff < 2 | age.diff == 2)
-  test_acc5 <- (age.diff < 5 | age.diff == 5)
-  test_acc10 <- (age.diff < 10 | age.diff == 10)
+  test_acc1 <- (diff < 1 | diff == 1)
+  test_acc2 <- (diff < 2 | diff == 2)
+  test_acc5 <- (diff < 5 | diff == 5)
+  test_acc10 <- (diff < 10 | diff == 10)
   acc_list <- list(test_acc, test_acc1, test_acc2, test_acc5, test_acc10)
   acc <- lapply(acc_list, function(x) mean(as.numeric(x)) * 100)
   names(acc) <- c("accuracy", "accuracy.1", "accuracy.2", "accuracy.5", "accuracy.10")
-  # test_acc1 <- as.numeric(test_acc1)
-  # test_acc2 <- as.numeric(test_acc2)
-  # test_acc5 <- as.numeric(test_acc5)
-  # test_acc10 <- as.numeric(test_acc10)
-  # accuracy1 <- mean(test_acc1) * 100
-  # accuracy2 <- mean(test_acc2) * 100
-  # accuracy5 <- mean(test_acc5) * 100
-  # accuracy10 <- mean(test_acc10) * 100
-  accusaur_out <- data.frame(x, age.diff)
+  accusaur_out <- data.frame(x, diff)
   colnames(accusaur_out) <- c("estimate", "lwr", "upr", "difference")
   #list("out" = accusaur_out, "accuracy" = accuracy, "accuracy.1" = accuracy1, "accuracy.2" = accuracy2, "accuracy.5" = accuracy5, "accuracy.10" = accuracy10)
   return(list("out" = accusaur_out, "acc" = acc))
