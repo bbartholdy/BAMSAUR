@@ -27,6 +27,7 @@
 #' @importFrom stats lm na.omit predict
 #' @example inst/BAMSAURex.R
 #' @keywords Age-at-death estimation
+#' @export
 BAMSAUR <- function(wear, data = NULL, rank = 2, pop = "MB11", class.cal = F, interval = "prediction", level = 0.68, mars.int = F, ...){
 warning("`BAMSAUR()` is deprecated as of BAMSAUR 0.1.0. Please use `bamsaur()` instead")
   wear <- as.data.frame(wear)
